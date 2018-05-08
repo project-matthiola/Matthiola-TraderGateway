@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Class-Path: spring-expression-5.0.5.RELEASE.jar tomcat-embed-websocket
+ -8.5.29.jar snakeyaml-1.19.jar spring-context-5.0.5.RELEASE.jar logba
+ ck-classic-1.2.3.jar spring-boot-starter-2.0.1.RELEASE.jar jackson-da
+ tatype-jdk8-2.9.5.jar spring-web-5.0.5.RELEASE.jar jackson-module-par
+ ameter-names-2.9.5.jar spring-boot-devtools-2.0.1.RELEASE.jar spring-
+ orm-5.0.5.RELEASE.jar spring-data-rest-webmvc-3.0.6.RELEASE.jar sprin
+ g-data-commons-2.0.6.RELEASE.jar jackson-databind-2.9.5.jar javassist
+ -3.22.0-GA.jar validation-api-2.0.1.Final.jar jboss-logging-3.3.2.Fin
+ al.jar spring-boot-starter-jdbc-2.0.1.RELEASE.jar hibernate-core-5.2.
+ 16.Final.jar spring-jdbc-5.0.5.RELEASE.jar mysql-connector-java-5.1.4
+ 6.jar jandex-2.0.3.Final.jar antlr-2.7.7.jar javax.annotation-api-1.3
+ .2.jar spring-webmvc-5.0.5.RELEASE.jar logback-core-1.2.3.jar spring-
+ aop-5.0.5.RELEASE.jar spring-plugin-core-1.2.0.RELEASE.jar spring-hat
+ eoas-0.24.0.RELEASE.jar spring-boot-starter-data-jpa-2.0.1.RELEASE.ja
+ r spring-data-jpa-2.0.6.RELEASE.jar classmate-1.3.4.jar spring-beans-
+ 5.0.5.RELEASE.jar jackson-datatype-jsr310-2.9.5.jar evo-inflector-1.2
+ .2.jar javax.transaction-api-1.2.jar jackson-annotations-2.9.0.jar lo
+ g4j-to-slf4j-2.10.0.jar hibernate-commons-annotations-5.0.1.Final.jar
+  HikariCP-2.7.8.jar slf4j-api-1.7.25.jar spring-boot-starter-web-2.0.
+ 1.RELEASE.jar tomcat-embed-el-8.5.29.jar hibernate-jpa-2.1-api-1.0.0.
+ Final.jar spring-boot-2.0.1.RELEASE.jar aspectjweaver-1.8.13.jar spri
+ ng-boot-starter-aop-2.0.1.RELEASE.jar spring-boot-starter-tomcat-2.0.
+ 1.RELEASE.jar spring-boot-starter-json-2.0.1.RELEASE.jar spring-boot-
+ starter-data-rest-2.0.1.RELEASE.jar spring-aspects-5.0.5.RELEASE.jar 
+ spring-boot-autoconfigure-2.0.1.RELEASE.jar dom4j-1.6.1.jar spring-co
+ re-5.0.5.RELEASE.jar spring-data-rest-core-3.0.6.RELEASE.jar tomcat-e
+ mbed-core-8.5.29.jar jackson-core-2.9.5.jar spring-tx-5.0.5.RELEASE.j
+ ar spring-jcl-5.0.5.RELEASE.jar spring-boot-starter-logging-2.0.1.REL
+ EASE.jar log4j-api-2.10.0.jar hibernate-validator-6.0.9.Final.jar jul
+ -to-slf4j-1.7.25.jar
+Main-Class: com.cts.trader.TraderApplication
+
