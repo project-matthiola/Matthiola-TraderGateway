@@ -4,7 +4,6 @@ import com.cts.trader.model.Trader;
 import com.cts.trader.repository.TraderRepository;
 import com.cts.trader.service.TraderService;
 import com.cts.trader.utils.JwtTokenUtil;
-import com.cts.trader.utils.PasswordUtil;
 import com.cts.trader.utils.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

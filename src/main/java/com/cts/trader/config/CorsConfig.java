@@ -9,9 +9,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class CorsConfig {
     /**
-     允许任何域名使用
-     允许任何头
-     允许任何方法（post、get等）
+     * 允许任何域名使用
+     * 允许任何头
+     * 允许任何方法（post、get等）
      */
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
