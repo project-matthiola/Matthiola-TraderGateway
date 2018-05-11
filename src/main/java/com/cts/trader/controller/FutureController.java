@@ -25,12 +25,17 @@ public class FutureController {
     }
 
     @GetMapping("/getAllFutures")
-    public RestResult getAllFutures(HttpServletRequest request) {
-        return resultGenerator.getSuccessResult(futureService.findAllFutures(request));
+    public RestResult getAllFutures() {
+        return resultGenerator.getSuccessResult(futureService.findAllFutures());
     }
 
     @GetMapping("/getFutureByFutureID")
     public RestResult getFutureByFutureID(@RequestParam("futureID")String futureID) {
         return resultGenerator.getSuccessResult(futureService.findFutureByFutureID(futureID));
+    }
+
+    @GetMapping("/getFuturesByFutureName")
+    public RestResult getFuturesByFutureName(@RequestParam("futureName")String futureName) {
+        return resultGenerator.getSuccessResult(futureService.findFuturesByFutureName(futureName));
     }
 }

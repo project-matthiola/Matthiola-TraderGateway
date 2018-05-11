@@ -13,21 +13,35 @@ import java.util.List;
 
 @Service("FutureService")
 public class FutureServiceImpl implements FutureService {
+    /*
     @Autowired
     private FutureRepository futureRepository;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    */
+
+    private FutureRepository futureRepository;
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    public FutureServiceImpl(FutureRepository futureRepository, JwtTokenUtil jwtTokenUtil) {
+        this.futureRepository = futureRepository;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
     @Override
-    public List findAllFutures(HttpServletRequest request) {
-        String username = jwtTokenUtil.parseUsername(request);
-        System.out.println(username);
+    public List findAllFutures() {
         return futureRepository.findAll();
     }
 
     @Override
     public Future findFutureByFutureID(String futureID) {
         return futureRepository.findFutureByFutureID(futureID);
+    }
+
+    @Override
+    public List findFuturesByFutureName(String futureName) {
+        return futureRepository.findFuturesByFutureName(futureName);
     }
 }

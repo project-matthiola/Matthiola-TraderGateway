@@ -9,10 +9,9 @@ public interface FutureService {
     /**
      * 查找所有future信息
      *
-     * @param request http请求
      * @return future列表
      */
-    List findAllFutures(HttpServletRequest request);
+    List findAllFutures();
 
     /**
      * 查找指定id的future信息
@@ -21,4 +20,12 @@ public interface FutureService {
      * @return future信息
      */
     Future findFutureByFutureID(String futureID);
+
+    /**
+     * 查找指定名称的future信息
+     *
+     * @param futureName 名称
+     * @return future列表
+     */
+    List findFuturesByFutureName(String futureName);
 }
