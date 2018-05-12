@@ -42,10 +42,17 @@ dependencies {
 	//compile('org.springframework.boot:spring-boot-starter-jdbc')
 	//compile('org.springframework.boot:spring-boot-starter-jersey')
 	compile('org.springframework.boot:spring-boot-starter-security')
-    compile('org.springframework.security:sprint-security-crypto:5.0.4')
-	compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.0.4.RELEASE'
+    compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-websocket')
-	//compile('org.apache.kafka:kafka-streams:1.0.1')
+
+    compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.4', classifier: 'jdk15'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    compile group: 'net.sf.ezmorph', name: 'ezmorph', version: '1.0.6'
+
+    //compile('org.apache.kafka:kafka-streams:1.0.1')
 	//compile('org.springframework.kafka:spring-kafka')
 	//compile('org.springframework.session:spring-session-data-redis')
 	//compile('org.springframework.session:spring-session-jdbc')

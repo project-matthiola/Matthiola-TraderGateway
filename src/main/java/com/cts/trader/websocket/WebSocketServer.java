@@ -1,5 +1,6 @@
 package com.cts.trader.websocket;
 
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -42,12 +43,35 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(final Session session, String message) {
         logger.info("来自客户端的消息：" + message);
+        String response = "response";
+        for(int i = 0;i < 10;i++) {
+            String msg = response + i;
+            JSONObject json = new JSONObject();
+            json.put("onlineCount", onlineCount);
+            json.put("response", msg);
+            String res = json.toString();
+            sendMessage(session, res);
+            logger.info("服务端返回消息：" + res);
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void sendMessage(Session session, String msg) {
         try {
-            session.getBasicRemote().sendText("服务端已收到");
+            session.getBasicRemote().sendText(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private void broadcastAll(String msg) {
+        for(Session s : sessionQueue) {
+            sendMessage(s, msg);
+        }
     }
 
 }
