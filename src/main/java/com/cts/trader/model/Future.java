@@ -8,26 +8,29 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Future")
+@Table(name = "Futures")
 public class Future implements Serializable {
     @Id
-    @Column(nullable = false, name = "future_id")
+    @Column(nullable = false, name = "futures_id")
     private String futureID;
 
-    @NotNull(message = "用户名不能为空")
-    @Column(nullable = false, name = "future_name")
+    @Column(nullable = false, name = "futures_name")
     private String futureName;
 
-    @NotNull(message = "密码不能为空")
     @Column(nullable = false, name = "period")
     private String period;
 
+    @Column(nullable = false, name = "symbol")
+    private String symbol;
+
+
     public Future() {}
 
-    public Future(String futureID, String futureName, String period) {
+    public Future(String futureID, String futureName, String period, String symbol) {
         this.futureID = futureID;
         this.futureName = futureName;
         this.period = period;
+        this.symbol = symbol;
     }
 
     public String getFutureID() {
@@ -52,5 +55,13 @@ public class Future implements Serializable {
 
     public void setPeriod(String period) {
         this.period = period;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }
