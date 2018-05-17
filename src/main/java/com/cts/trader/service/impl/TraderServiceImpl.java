@@ -49,7 +49,6 @@ public class TraderServiceImpl implements TraderService {
         String encrytPassword = encoder.encode(rawPassword);
         trader.setTraderID(new SnowflakeIdWorker(0, 0).nextId());
         trader.setPassword(encrytPassword);
-        trader.setFirmID(0L);
         trader.setRole("ROLE_USER");
         traderRepository.save(trader);
         return trader;

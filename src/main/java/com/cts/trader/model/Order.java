@@ -6,29 +6,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "Orders")
 public class Order implements Serializable {
-    @Id
-    @Column(nullable = false, name = "order_id")
     private Long orderID;
 
-    @Column(nullable = false, name = "future_id")
     private String futureID;
 
-    @Column(nullable = false, name = "type")
     private String type;
 
-    @Column(nullable = false, name = "side")
     private String side;
 
-    @Column(nullable = false, name = "price")
     private Float price;
 
-    @Column(nullable = false, name = "quantity")
     private Integer quantity;
 
-    @Column(nullable = false, name = "broker_name")
     private String brokerName;
 
     public Order() {}
@@ -43,7 +33,6 @@ public class Order implements Serializable {
         this.quantity = quantity;
         this.brokerName = brokerName;
     }
-
 
     public Long getOrderID() {
         return orderID;

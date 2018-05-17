@@ -1,5 +1,7 @@
 package com.cts.trader.websocket;
 
+import com.cts.trader.utils.HttpUtil;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Queue;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -18,6 +21,7 @@ public class WebSocketServer {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static AtomicInteger onlineCount = new AtomicInteger(0);
     private static Queue<Session> sessionQueue = new ConcurrentLinkedQueue<>();
+    private static String DISCONNECT_KEY = "zuwBo*W^!7E#Jc1@";
 
     @OnOpen
     public void onOpen(Session session) {
@@ -43,20 +47,58 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(final Session session, String message) {
         logger.info("来自客户端的消息：" + message);
-        String response = "response";
-        for(int i = 0;i < 10;i++) {
-            String msg = response + i;
-            JSONObject json = new JSONObject();
-            json.put("onlineCount", onlineCount);
-            json.put("response", msg);
-            String res = json.toString();
-            sendMessage(session, res);
-            logger.info("服务端返回消息：" + res);
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (message.equals(DISCONNECT_KEY)) {
+            onClose(session);
+            return;
+        }
+        deliverFuturesMarket(session, message);
+    }
+
+    private void deliverFuturesMarket(Session session, String futureID) {
+        if (!sessionQueue.contains(session)) {
+            logger.info("当前在线人数：" + onlineCount);
+            return;
+        }
+
+        String result = HttpUtil.sendGet("http://private-8a634-matthiola.apiary-mock.com/futures/" + futureID + "/book", null);
+        JSONObject jsonResult = JSONObject.fromObject(result);
+        JSONObject jsonData = jsonResult.getJSONObject("data");
+        System.out.println(jsonData);
+        String res = jsonData.toString();
+        sendMessage(session, res);
+
+        /*
+        int total = (int)(Math.random() * 30);
+        JSONArray jsonArraySells = new JSONArray();
+        JSONArray jsonArrayBuys = new JSONArray();
+        for (int i = 0;i < total;i++) {
+            JSONObject json1 = new JSONObject();
+            json1.put("id", i);
+            json1.put("price", i * 0.9);
+            json1.put("quantity", i * 100);
+            jsonArraySells.add(json1);
+        }
+        total = (int)(Math.random() * 30);
+        for (int i = 0;i < total;i++) {
+            JSONObject json2 = new JSONObject();
+            json2.put("id", i);
+            json2.put("price", (30 - i) * 0.9);
+            json2.put("quantity", i * 100);
+            jsonArrayBuys.add(json2);
+        }
+        JSONObject orderBook = new JSONObject();
+        orderBook.put("sells", jsonArraySells);
+        orderBook.put("buys", jsonArrayBuys);
+
+        String res = orderBook.toString();
+        sendMessage(session, res);
+        logger.info("服务端返回消息：" + res);
+        */
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            onClose(session);
         }
     }
 

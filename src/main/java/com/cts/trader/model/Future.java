@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -23,14 +22,18 @@ public class Future implements Serializable {
     @Column(nullable = false, name = "symbol")
     private String symbol;
 
+    @Column(nullable = false, name = "category")
+    private String category;
+
 
     public Future() {}
 
-    public Future(String futureID, String futureName, String period, String symbol) {
+    public Future(String futureID, String futureName, String period, String symbol, String category) {
         this.futureID = futureID;
         this.futureName = futureName;
         this.period = period;
         this.symbol = symbol;
+        this.category = category;
     }
 
     public String getFutureID() {
@@ -63,5 +66,13 @@ public class Future implements Serializable {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

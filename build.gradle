@@ -52,6 +52,9 @@ dependencies {
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
     compile group: 'net.sf.ezmorph', name: 'ezmorph', version: '1.0.6'
 
+    // https://mvnrepository.com/artifact/org.quickfixj/quickfixj-core
+    compile group: 'org.quickfixj', name: 'quickfixj-core', version: '2.0.0'
+
     //compile('org.apache.kafka:kafka-streams:1.0.1')
 	//compile('org.springframework.kafka:spring-kafka')
 	//compile('org.springframework.session:spring-session-data-redis')

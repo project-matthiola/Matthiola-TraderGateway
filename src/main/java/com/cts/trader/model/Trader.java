@@ -22,19 +22,15 @@ public class Trader implements Serializable {
     @Column(nullable = false, name = "password")
     private String password;
 
-    @Column(nullable = true, name = "firm_id")
-    private Long firmID;
-
     @Column(nullable = true, name = "role")
     private String role;
 
     public Trader() {}
 
-    public Trader(Long traderID, String traderName, String password, Long firmID, String role) {
+    public Trader(Long traderID, String traderName, String password, String role) {
         this.traderID = traderID;
         this.traderName = traderName;
         this.password = password;
-        this.firmID = firmID;
         this.role = role;
     }
 
@@ -60,14 +56,6 @@ public class Trader implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Long getFirmID() {
-        return firmID;
-    }
-
-    public void setFirmID(Long firmID) {
-        this.firmID = firmID;
     }
 
     public String getRole() {

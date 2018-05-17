@@ -1,5 +1,7 @@
 package com.cts.trader.utils;
 
+import net.sf.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,7 +23,7 @@ public class HttpUtil {
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36");
-            connection.setRequestProperty("authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJDVFMiLCJzdWIiOiJ0cmFkZXIyIiwiZXhwIjoxNTI2NDc3OTEyLCJpYXQiOjE1MjY0NzYxMTI5MDl9.Gb9XZj8byBTPyq1Vfk6m_fJjoIdK9Ng9f9n1pKEj-g4p4GC2EEIDJ_Cc2MxM3lRmSqweAf9p8BsSfAiy9Re4RA");
+            //connection.setRequestProperty("authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJDVFMiLCJzdWIiOiJ0cmFkZXIyIiwiZXhwIjoxNTI2NDc3OTEyLCJpYXQiOjE1MjY0NzYxMTI5MDl9.Gb9XZj8byBTPyq1Vfk6m_fJjoIdK9Ng9f9n1pKEj-g4p4GC2EEIDJ_Cc2MxM3lRmSqweAf9p8BsSfAiy9Re4RA");
             connection.connect();
 
             Map<String, List<String>> map = connection.getHeaderFields();
@@ -90,7 +92,9 @@ public class HttpUtil {
     public static void main(String[] args) {
         //String s = HttpUtil.sendGet("http://202.120.40.87:22471/Entity/Ubfbd4152866263/iCampus/Member/", null);
         //System.out.println(s);
-        String s = HttpUtil.sendGet("http://localhost:8888/future/getAllFutures", null);
-        System.out.println(s);
+        String result = HttpUtil.sendGet("http://private-8a634-matthiola.apiary-mock.com/futures/" + "123" + "/book", null);
+        JSONObject jsonResult = JSONObject.fromObject(result);
+        JSONObject jsonData = jsonResult.getJSONObject("data");
+        System.out.println(jsonData);
     }
 }
