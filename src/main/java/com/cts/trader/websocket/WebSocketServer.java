@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -54,17 +56,45 @@ public class WebSocketServer {
         deliverFuturesMarket(session, message);
     }
 
-    private void deliverFuturesMarket(Session session, String futureID) {
+    private void deliverFuturesMarket(Session session, String message) {
         if (!sessionQueue.contains(session)) {
             logger.info("当前在线人数：" + onlineCount);
             return;
         }
-
+        String[] params = message.split(",");
+        String futureID = params[0];
+        String brokerName = params[1];
+        System.out.println(futureID + "," + brokerName);
+        /*
         String result = HttpUtil.sendGet("http://private-8a634-matthiola.apiary-mock.com/futures/" + futureID + "/book", null);
         JSONObject jsonResult = JSONObject.fromObject(result);
         JSONObject jsonData = jsonResult.getJSONObject("data");
         System.out.println(jsonData);
         String res = jsonData.toString();
+        sendMessage(session, res);
+        */
+
+        int total = (int)(Math.random() * 50);
+        JSONArray bidsList = new JSONArray();
+        JSONArray asksList = new JSONArray();
+        for (int i = 1;i <= total; i++) {
+            List tmp = new ArrayList();
+            tmp.add(i * 0.8);
+            tmp.add(i * 100);
+            asksList.add(tmp);
+        }
+        total = (int)(Math.random() * 50);
+        for (int i = 1;i <= total; i++) {
+            List tmp = new ArrayList();
+            tmp.add((50 - i) * 0.8);
+            tmp.add(i * 100);
+            bidsList.add(tmp);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("bids", bidsList);
+        jsonObject.put("asks", asksList);
+        System.out.println(jsonObject);
+        String res = jsonObject.toString();
         sendMessage(session, res);
 
         /*
