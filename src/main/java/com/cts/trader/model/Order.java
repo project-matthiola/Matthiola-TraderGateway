@@ -1,9 +1,10 @@
 package com.cts.trader.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Order implements Serializable {
-    private Long orderID;
+    private UUID orderID;
 
     private String futureID;
 
@@ -19,7 +20,7 @@ public class Order implements Serializable {
 
     public Order() {}
 
-    public Order(Long orderID, String futureID, String type, String side,
+    public Order(UUID orderID, String futureID, String type, String side,
                  Float price, Integer quantity, String brokerName) {
         this.orderID = orderID;
         this.futureID = futureID;
@@ -30,11 +31,11 @@ public class Order implements Serializable {
         this.brokerName = brokerName;
     }
 
-    public Long getOrderID() {
+    public UUID getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(Long orderID) {
+    public void setOrderID(UUID orderID) {
         this.orderID = orderID;
     }
 

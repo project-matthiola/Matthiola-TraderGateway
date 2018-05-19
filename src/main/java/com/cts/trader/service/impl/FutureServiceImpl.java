@@ -32,7 +32,8 @@ public class FutureServiceImpl implements FutureService {
 
     @Override
     public List findAllFutures() {
-        List<Future> futureList = futureRepository.findAll();
+        //List<Future> futureList = futureRepository.findAll();
+        List<Future> futureList = futureRepository.findFuturesByExpired("false");
         List futures = new ArrayList();
         Set<String> futuresNameSet = new HashSet<>();
         for (Future future : futureList) {
@@ -43,12 +44,13 @@ public class FutureServiceImpl implements FutureService {
             Map map = new HashMap();
             map.put("futureName", futureName);
 
-            List<Future> specificFutures = futureRepository.findFuturesByFutureName(futureName);
+            //List<Future> specificFutures = futureRepository.findFuturesByFutureName(futureName);
+            List<Future> specificFutures = futureRepository.findFuturesByFutureNameAndExpired(futureName, "false");
             List futureInfoList = new ArrayList();
             for (Future specificFuture : specificFutures) {
                 Map periodInfo = new HashMap();
                 periodInfo.put("value", specificFuture.getFutureID());
-                periodInfo.put("period", specificFuture.getPeriod() + "期");
+                periodInfo.put("period", specificFuture.getPeriod() + " Period");
                 futureInfoList.add(periodInfo);
             }
             map.put("futureInfo", futureInfoList);
