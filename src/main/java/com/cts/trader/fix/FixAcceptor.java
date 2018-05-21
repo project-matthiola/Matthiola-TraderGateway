@@ -1,14 +1,8 @@
 package com.cts.trader.fix;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import quickfix.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.concurrent.CountDownLatch;
 
 public class FixAcceptor {

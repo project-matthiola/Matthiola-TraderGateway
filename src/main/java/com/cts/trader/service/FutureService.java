@@ -14,6 +14,13 @@ public interface FutureService {
     List findAllFutures();
 
     /**
+     * 获取futures级联列表
+     *
+     * @return futures级联列表
+     */
+    List getFuturesCascader();
+
+    /**
      * 查找指定id的future信息
      *
      * @param futureID id

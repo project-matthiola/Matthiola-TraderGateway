@@ -61,6 +61,34 @@ public class FutureServiceImpl implements FutureService {
     }
 
     @Override
+    public List getFuturesCascader() {
+        List<Future> futureList = futureRepository.findAll();
+        List futuresCascader = new ArrayList();
+        Set<String> futuresNameSet = new HashSet<>();
+        for (Future future : futureList) {
+            futuresNameSet.add(future.getFutureName());
+        }
+
+        for (String futuresName : futuresNameSet) {
+            Map map = new HashMap();
+            map.put("value", futuresName);
+            map.put("label", futuresName);
+
+            List<Future> specificFutures = futureRepository.findFuturesByFutureName(futuresName);
+            List childrenList = new ArrayList();
+            for (Future specificFuture : specificFutures) {
+                Map children = new HashMap();
+                children.put("value", specificFuture.getFutureID());
+                children.put("label", specificFuture.getPeriod() + "Period");
+                childrenList.add(children);
+            }
+            map.put("children", childrenList);
+            futuresCascader.add(map);
+        }
+        return futuresCascader;
+    }
+
+    @Override
     public Future findFutureByFutureID(String futureID) {
         return futureRepository.findFutureByFutureID(futureID);
     }

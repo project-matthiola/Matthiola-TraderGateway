@@ -54,6 +54,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.quickfixj/quickfixj-core
     compile group: 'org.quickfixj', name: 'quickfixj-core', version: '2.0.0'
+	// https://mvnrepository.com/artifact/org.quickfixj/quickfixj-all
+	compile group: 'org.quickfixj', name: 'quickfixj-all', version: '2.0.0'
 
     //compile('org.apache.kafka:kafka-streams:1.0.1')
 	//compile('org.springframework.kafka:spring-kafka')

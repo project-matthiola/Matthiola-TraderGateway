@@ -29,6 +29,11 @@ public class FutureController {
         return resultGenerator.getSuccessResult(futureService.findAllFutures());
     }
 
+    @GetMapping("/getFuturesCascader")
+    public RestResult getFuturesCascader() {
+        return resultGenerator.getSuccessResult(futureService.getFuturesCascader());
+    }
+
     @GetMapping("/getFutureByFutureID")
     public RestResult getFutureByFutureID(@RequestParam("futureID")String futureID) {
         return resultGenerator.getSuccessResult(futureService.findFutureByFutureID(futureID));

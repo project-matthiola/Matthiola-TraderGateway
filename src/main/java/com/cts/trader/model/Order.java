@@ -1,6 +1,7 @@
 package com.cts.trader.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Order implements Serializable {
@@ -8,27 +9,30 @@ public class Order implements Serializable {
 
     private String futureID;
 
-    private String type;
+    private char type;
 
-    private String side;
+    private char side;
 
-    private Float price;
+    private Double price;
 
-    private Integer quantity;
+    private Double amount;
 
     private String brokerName;
 
+    private LocalDateTime timeStamp;
+
     public Order() {}
 
-    public Order(UUID orderID, String futureID, String type, String side,
-                 Float price, Integer quantity, String brokerName) {
+    public Order(UUID orderID, String futureID, char type, char side,
+                 Double price, Double amount, String brokerName, LocalDateTime timeStamp) {
         this.orderID = orderID;
         this.futureID = futureID;
         this.type = type;
         this.side = side;
         this.price = price;
-        this.quantity = quantity;
+        this.amount = amount;
         this.brokerName = brokerName;
+        this.timeStamp = timeStamp;
     }
 
     public UUID getOrderID() {
@@ -47,36 +51,36 @@ public class Order implements Serializable {
         this.futureID = futureID;
     }
 
-    public String getType() {
+    public char getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(char type) {
         this.type = type;
     }
 
-    public String getSide() {
+    public char getSide() {
         return side;
     }
 
-    public void setSide(String side) {
+    public void setSide(char side) {
         this.side = side;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public String getBrokerName() {
@@ -85,5 +89,13 @@ public class Order implements Serializable {
 
     public void setBrokerName(String brokerName) {
         this.brokerName = brokerName;
+    }
+
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

@@ -3,6 +3,7 @@ package com.cts.trader.fix;
 import org.springframework.stereotype.Component;
 import quickfix.*;
 
+@Component
 public class AcceptorApplication extends MessageCracker implements Application {
     // private static volatile SessionID sessionID;
 
