@@ -1,11 +1,16 @@
 package com.cts.trader.websocket;
 
+import com.cts.trader.model.Broker;
+import com.cts.trader.repository.BrokerRepository;
+import com.cts.trader.service.OrderService;
 import com.cts.trader.utils.HttpUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.server.standard.SpringConfigurator;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -13,17 +18,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@ServerEndpoint("/websocket")
+@ServerEndpoint(value = "/websocket", configurator = SpringConfigurator.class)
 @Component
 public class WebSocketServer {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static AtomicInteger onlineCount = new AtomicInteger(0);
-    private static Queue<Session> sessionQueue = new ConcurrentLinkedQueue<>();
-    private static String DISCONNECT_KEY = "zuwBo*W^!7E#Jc1@";
+    private AtomicInteger onlineCount = new AtomicInteger(0);
+    private Queue<Session> sessionQueue = new ConcurrentLinkedQueue<>();
+    private String DISCONNECT_KEY = "zuwBo*W^!7E#Jc1@";
+
+    @Autowired
+    private BrokerRepository brokerRepository;
+
+    @Autowired
+    private OrderService orderService;
+
+
+    public Queue<Session> getSessionQueue() {
+        return sessionQueue;
+    }
+
+    public AtomicInteger getOnlineCount() {
+        return onlineCount;
+    }
 
     @OnOpen
     public void onOpen(Session session) {
@@ -49,11 +68,33 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(final Session session, String message) {
         logger.info("来自客户端的消息：" + message);
-        if (message.equals(DISCONNECT_KEY)) {
-            onClose(session);
+
+        String[] params = message.split(",");
+        if (params[0].equals("orderBook")) {
+            deliverFuturesMarket(session, message);
+        } else if (params[0].equals("order")) {
+            deliverOrderInfos(session, message);
+        }
+
+    }
+
+    private void deliverOrderInfos(Session session, String message) {
+        if (!sessionQueue.contains(session)) {
+            logger.info("当前在线人数：" + onlineCount);
             return;
         }
-        deliverFuturesMarket(session, message);
+        String[] params = message.split(",");
+        String futureID = params[1];
+        String status = params[2];
+        System.out.println(futureID + "," + status);
+
+        List<Broker> brokers = brokerRepository.findAll();
+        List resultList = new ArrayList();
+        for (Broker broker : brokers) {
+            String result = new HttpUtil().sendGet("url", null, broker.getBrokerName());
+            JSONObject jsonResult = JSONObject.fromObject(result);
+            JSONArray jsonArray = jsonResult.getJSONArray("data");
+        }
     }
 
     private void deliverFuturesMarket(Session session, String message) {
@@ -62,11 +103,12 @@ public class WebSocketServer {
             return;
         }
         String[] params = message.split(",");
-        String futureID = params[0];
-        String brokerName = params[1];
+        String futureID = params[1];
+        String brokerName = params[2];
         System.out.println(futureID + "," + brokerName);
+
         /*
-        String result = HttpUtil.sendGet("http://private-8a634-matthiola.apiary-mock.com/futures/" + futureID + "/book", null);
+        String result = new HttpUtil().sendGet("http://private-8a634-matthiola.apiary-mock.com/futures/" + futureID + "/book", null, brokerName);
         JSONObject jsonResult = JSONObject.fromObject(result);
         JSONObject jsonData = jsonResult.getJSONObject("data");
         System.out.println(jsonData);

@@ -46,6 +46,15 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-websocket')
 
+	// https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket
+	compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.3.8'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.0.2.RELEASE'
+    // https://mvnrepository.com/artifact/redis.clients/jedis
+    compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
+
+
     compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.4', classifier: 'jdk15'
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
@@ -57,17 +66,14 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.quickfixj/quickfixj-all
 	compile group: 'org.quickfixj', name: 'quickfixj-all', version: '2.0.0'
 
-    //compile('org.apache.kafka:kafka-streams:1.0.1')
-	//compile('org.springframework.kafka:spring-kafka')
-	//compile('org.springframework.session:spring-session-data-redis')
-	//compile('org.springframework.session:spring-session-jdbc')
+
 	compile('org.springframework.boot:spring-boot-starter-logging')
     compile 'org.springframework.boot:spring-boot-devtools'
     compile 'org.springframework.boot:spring-boot-starter-tomcat'
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('mysql:mysql-connector-java')
 	//providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-	//testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
 	testCompile('org.springframework.security:spring-security-test')
 }

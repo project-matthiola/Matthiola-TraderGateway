@@ -9,6 +9,7 @@ import com.cts.trader.utils.JwtTokenUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import quickfix.*;
 import quickfix.field.*;
@@ -31,6 +32,40 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private BrokerRepository brokerRepository;
 
+    @Async
+    public void iceburgOrder(Order order, String username) {
+        try {
+            Thread.sleep(2000);
+            Double qty = order.getAmount();
+            Double sent = 0.0;
+            for (; sent < qty; sent += 200.0) {
+                Thread.sleep(60 * 1000);
+
+                NewOrderSingle orderSingle = new NewOrderSingle();
+                orderSingle.getHeader().setField(new MsgType(MsgType.ORDER_SINGLE));
+                orderSingle.getHeader().setField(new SenderCompID("Trader"));
+                orderSingle.getHeader().setField(new TargetCompID("Broker"));
+                orderSingle.getHeader().setField(new SenderSubID(username));
+                orderSingle.set(new ClOrdID(UUID.randomUUID().toString()));
+                orderSingle.set(new OrdType(order.getType()));
+                orderSingle.set(new Side(order.getSide()));
+                orderSingle.set(new Symbol(order.getFutureID()));
+                orderSingle.set(new OrderQty(200.0));
+                orderSingle.set(new Price(order.getPrice()));
+                orderSingle.set(new TransactTime(LocalDateTime.now(ZoneId.of("UTC"))));
+
+                try {
+                    Session.sendToTarget(orderSingle);
+                } catch (SessionNotFound e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean sendOrder(Order order, HttpServletRequest request) {
         String username = jwtTokenUtil.parseUsername(request);
@@ -38,6 +73,11 @@ public class OrderServiceImpl implements OrderService {
 
         order.setOrderID(UUID.randomUUID());
         order.setTimeStamp(LocalDateTime.now(ZoneId.of("UTC")));
+
+        if (order.getAmount() > 10000.0) {
+            iceburgOrder(order, username);
+            return true;
+        }
 
         NewOrderSingle orderSingle = new NewOrderSingle();
         orderSingle.getHeader().setField(new MsgType(MsgType.ORDER_SINGLE));

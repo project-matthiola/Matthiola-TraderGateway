@@ -24,10 +24,12 @@ public class HttpUtil {
         String result = "";
         BufferedReader in = null;
         try {
+            /*
             Broker broker = brokerRepository.findBrokerByBrokerName(brokerName);
             String brokerToken = broker.getBrokerToken();
             String brokerUrl = broker.getBrokerIp();
             url = brokerUrl + url;
+            */
             String urlNameString = (param != null) ? url + "?" + param : url;
             System.out.println(url);
             URL readUrl = new URL(urlNameString);
@@ -36,7 +38,7 @@ public class HttpUtil {
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36");
-            connection.setRequestProperty("authorization", "Bearer " + brokerToken);
+            //connection.setRequestProperty("authorization", "Bearer " + brokerToken);
             connection.connect();
 
             Map<String, List<String>> map = connection.getHeaderFields();
@@ -103,6 +105,7 @@ public class HttpUtil {
     }
 
     public static void main(String[] args) {
+        //String s = new HttpUtil().sendGet("http://202.120.40.87:22471/Entity/Ubfbd4152866263/iCampus/Member/",null,"");
         //String s = HttpUtil.sendGet("http://202.120.40.87:22471/Entity/Ubfbd4152866263/iCampus/Member/", null);
         //System.out.println(s);
         // String result = HttpUtil.sendGet("http://private-8a634-matthiola.apiary-mock.com/futures/" + "123" + "/book", null);
