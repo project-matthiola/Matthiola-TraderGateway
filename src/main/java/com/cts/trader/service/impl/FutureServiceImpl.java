@@ -6,6 +6,7 @@ import com.cts.trader.service.FutureService;
 import com.cts.trader.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ public class FutureServiceImpl implements FutureService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
+    @Cacheable(cacheNames = "futureslist")
     @Override
     public List findAllFutures() {
         //List<Future> futureList = futureRepository.findAll();

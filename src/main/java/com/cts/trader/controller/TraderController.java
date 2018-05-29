@@ -13,6 +13,7 @@ import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/trader")
@@ -50,12 +51,18 @@ public class TraderController {
             return resultGenerator.getFailResult("用户名/密码错误");
         }
         */
+        //Date expirationDate = new Date(System.currentTimeMillis() + 1800L * 1000);
+        //String timestamp = String.valueOf(expirationDate.getTime());
+        //System.out.println(timestamp);
+        //return resultGenerator.getSuccessResult(timestamp, token);
         return resultGenerator.getSuccessResult(token);
     }
 
     @GetMapping("/refreshToken")
     public RestResult refreshToken(@RequestHeader String authorization) throws AuthenticationException {
-        return resultGenerator.getSuccessResult(traderService.refreshToken(authorization));
+        String result = traderService.refreshToken(authorization);
+        if (result.equals("error")) return resultGenerator.getFailResult("fail");
+        else return resultGenerator.getSuccessResult(result);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

@@ -38,7 +38,8 @@ public class OrderServiceImpl implements OrderService {
             Thread.sleep(2000);
             Double qty = order.getAmount();
             Double sent = 0.0;
-            for (; sent < qty; sent += 200.0) {
+            Double step = qty / (60 * 60 * 8);
+            for (; sent < qty; sent += step) {
                 Thread.sleep(60 * 1000);
 
                 NewOrderSingle orderSingle = new NewOrderSingle();
@@ -50,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
                 orderSingle.set(new OrdType(order.getType()));
                 orderSingle.set(new Side(order.getSide()));
                 orderSingle.set(new Symbol(order.getFutureID()));
-                orderSingle.set(new OrderQty(200.0));
+                orderSingle.set(new OrderQty(step));
                 orderSingle.set(new Price(order.getPrice()));
                 orderSingle.set(new TransactTime(LocalDateTime.now(ZoneId.of("UTC"))));
 

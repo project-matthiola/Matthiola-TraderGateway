@@ -4,11 +4,13 @@ import com.cts.trader.model.Broker;
 import com.cts.trader.repository.BrokerRepository;
 import com.cts.trader.service.OrderService;
 import com.cts.trader.utils.HttpUtil;
+import com.cts.trader.utils.SpringUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
 
@@ -21,19 +23,20 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@ServerEndpoint(value = "/websocket", configurator = SpringConfigurator.class)
+@ServerEndpoint("/websocket")
 @Component
 public class WebSocketServer {
+    // 日志记录
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    // 在线人数统计
     private AtomicInteger onlineCount = new AtomicInteger(0);
+
+    // 在线session记录
     private Queue<Session> sessionQueue = new ConcurrentLinkedQueue<>();
-    private String DISCONNECT_KEY = "zuwBo*W^!7E#Jc1@";
 
-    @Autowired
-    private BrokerRepository brokerRepository;
-
-    @Autowired
-    private OrderService orderService;
+    // Redis连接
+    private RedisTemplate redisTemplate;
 
 
     public Queue<Session> getSessionQueue() {
@@ -83,6 +86,7 @@ public class WebSocketServer {
             logger.info("当前在线人数：" + onlineCount);
             return;
         }
+        /*
         String[] params = message.split(",");
         String futureID = params[1];
         String status = params[2];
@@ -95,6 +99,15 @@ public class WebSocketServer {
             JSONObject jsonResult = JSONObject.fromObject(result);
             JSONArray jsonArray = jsonResult.getJSONArray("data");
         }
+        */
+    }
+
+    private String getFuturesMarketFromRedis(String key) {
+        redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
+
+        if (!redisTemplate.hasKey(key)) return null;
+
+        return (String)redisTemplate.opsForValue().get(key);
     }
 
     private void deliverFuturesMarket(Session session, String message) {
@@ -105,17 +118,14 @@ public class WebSocketServer {
         String[] params = message.split(",");
         String futureID = params[1];
         String brokerName = params[2];
-        System.out.println(futureID + "," + brokerName);
+
+        String key = brokerName + "," + futureID;
+        System.out.println("key=" + key);
+        String result = getFuturesMarketFromRedis(key);
+        sendMessage(session, result);
+        logger.info("服务端返回: " + result);
 
         /*
-        String result = new HttpUtil().sendGet("http://private-8a634-matthiola.apiary-mock.com/futures/" + futureID + "/book", null, brokerName);
-        JSONObject jsonResult = JSONObject.fromObject(result);
-        JSONObject jsonData = jsonResult.getJSONObject("data");
-        System.out.println(jsonData);
-        String res = jsonData.toString();
-        sendMessage(session, res);
-        */
-
         int total = (int)(Math.random() * 50);
         JSONArray bidsList = new JSONArray();
         JSONArray asksList = new JSONArray();

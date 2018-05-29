@@ -6,9 +6,8 @@ import javax.persistence.*;
 @Table(name = "Broker")
 public class Broker {
     @Id
-    @GeneratedValue
     @Column(nullable = false, name = "broker_id")
-    private Long brokerID;
+    private String brokerID;
 
     @Column(nullable = false, name = "broker_name")
     private String brokerName;
@@ -21,18 +20,18 @@ public class Broker {
 
     public Broker() {}
 
-    public Broker(Long brokerID, String brokerName, String brokerIp, String brokerToken) {
+    public Broker(String brokerID, String brokerName, String brokerIp, String brokerToken) {
         this.brokerID = brokerID;
         this.brokerName = brokerName;
         this.brokerIp = brokerIp;
         this.brokerToken = brokerToken;
     }
 
-    public Long getBrokerID() {
+    public String getBrokerID() {
         return brokerID;
     }
 
-    public void setBrokerID(Long brokerID) {
+    public void setBrokerID(String brokerID) {
         this.brokerID = brokerID;
     }
 

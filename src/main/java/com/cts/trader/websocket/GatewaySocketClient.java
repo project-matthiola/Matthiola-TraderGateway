@@ -29,14 +29,7 @@ public class GatewaySocketClient {
     public static void setApplicationContext(ApplicationContext context) {
         applicationContext = context;
     }
-
     private RedisTemplate redisTemplate;
-    //@Autowired
-    //private WebSocketServer server = (WebSocketServer)SpringUtil.getBean("websocketserver");
-
-    //@Resource(name = "myRedisTemplate")
-    //private RedisTemplate redisTemplate = SpringUtil.getBean("myRedisTemplate", RedisTemplate.class);
-    //private RedisTemplate redisTemplate = (RedisTemplate) ContextLoader.getCurrentWebApplicationContext().getBean("myRedisTemplate");
 
     public static GatewaySocketClient connect(String url) throws Exception {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -70,9 +63,6 @@ public class GatewaySocketClient {
     public void onMessage(String message) throws Exception {
         logger.info("client on message" + message);
 
-        //redisTemplate = (RedisTemplate)applicationContext.getBean("myRedisTemplate");
-        //redisTemplate = (RedisTemplate)ContextLoader.getCurrentWebApplicationContext().getBean("myRedisTemplate");
-        //redisTemplate = new RedisTemplate();
         redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
 
         JSONObject jsonObject = JSONObject.fromObject(message);

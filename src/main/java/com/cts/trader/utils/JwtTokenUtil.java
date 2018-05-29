@@ -89,7 +89,7 @@ public class JwtTokenUtil implements Serializable {
             Date expiration = claims.getExpiration();
             return expiration.before(new Date());
         } catch (Exception e) {
-            return false;
+            return true;
         }
     }
 

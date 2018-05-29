@@ -11,27 +11,12 @@ import javax.websocket.ContainerProvider;
 import javax.websocket.WebSocketContainer;
 import java.util.Queue;
 
-@Component(value = "SocketClientEngine")
+//@Component(value = "SocketClientEngine")
 public class SocketClientEngine {
-    //@Autowired
     private GatewaySocketClient client;
 
     @Autowired
     public SocketClientEngine(GatewaySocketClient client) throws Exception {
-        /*
-        try {
-            Thread.sleep(5000);
-            //this.client = GatewaySocketClient.connect("ws://localhost:8888/mockServer");
-            this.client = client;
-            this.client.connect2Url("ws://localhost:8888/mockServer");
-            while (true) {
-                Thread.sleep(2000);
-                client.sendMessage("abcabc");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
         this.client = client;
         //this.client.connect2Url("ws://localhost:4869/mockServer");
         runWs();

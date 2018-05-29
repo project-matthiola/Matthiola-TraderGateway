@@ -9,7 +9,7 @@ import quickfix.fix50sp2.NewOrderSingle;
 
 import java.util.UUID;
 
-@Service("FixInitiator")
+//@Service("FixInitiator")
 public class FixInitiator {
     private static SocketInitiator initiator = null;
 
