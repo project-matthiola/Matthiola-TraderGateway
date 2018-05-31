@@ -15,6 +15,6 @@ public class Test2 {
         //this.test.testRedis();
         this.engine = engine;
         //Thread.sleep(5000);
-        this.engine.runWs();
+        //this.engine.runWs();
     }
 }

@@ -24,6 +24,5 @@ public class TraderApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext applicationContext = SpringApplication.run(TraderApplication.class, args);
         SpringUtil.setApplicationContext1(applicationContext);
-		GatewaySocketClient.setApplicationContext(applicationContext);
 	}
 }

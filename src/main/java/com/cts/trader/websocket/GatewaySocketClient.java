@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
@@ -17,18 +18,24 @@ import javax.annotation.Resource;
 import javax.websocket.*;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ClientEndpoint
 @Component
 public class GatewaySocketClient {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Session session;
-    private static ApplicationContext applicationContext;
+    private static Map<Session, String> brokerMapping = new ConcurrentHashMap<>();
 
-    public static void setApplicationContext(ApplicationContext context) {
-        applicationContext = context;
+    public void setBrokerMapping(String brokerName) {
+        brokerMapping.put(this.session, brokerName);
     }
+
+    private Map getBrokerMapping() {
+        return brokerMapping;
+    }
+
     private RedisTemplate redisTemplate;
 
     public static GatewaySocketClient connect(String url) throws Exception {
@@ -40,6 +47,7 @@ public class GatewaySocketClient {
 
     public void connect2Url(String url) throws Exception {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+        //this.brokerName = brokerName;
         this.session = container.connectToServer(GatewaySocketClient.class, new URI(url));
     }
 
@@ -67,14 +75,32 @@ public class GatewaySocketClient {
 
         JSONObject jsonObject = JSONObject.fromObject(message);
         Set<String> keySet = jsonObject.keySet();
-        String marketKey = "";
+        //String[] jsonKeys = (String[])keySet.toArray();
+        List<String> jsonKeys = new ArrayList<String>();
         for (String key : keySet) {
-            marketKey = key;
+            jsonKeys.add(key);
         }
-        System.out.println(marketKey);
-        JSONObject marketData = jsonObject.getJSONObject(marketKey);
 
+        System.out.println(jsonKeys);
+        String type = jsonObject.getString(jsonKeys.get(0));
+        String futuresID = jsonObject.getString(jsonKeys.get(1));
+        JSONObject data = jsonObject.getJSONObject(jsonKeys.get(2));
+        String redisKey = "";
+        switch (type) {
+            case "orderBook":
+                redisKey = "orderBook," + brokerMapping.get(session) + "," + futuresID;
+                redisTemplate.opsForValue().set(redisKey, data.toString());
+                break;
+
+            case "trade":
+                redisKey = "trade," + brokerMapping.get(session) + "," + futuresID;
+                redisTemplate.opsForValue().set(redisKey, data.toString());
+                break;
+        }
+        /*
+        JSONObject marketData = jsonObject.getJSONObject("data");
         redisTemplate.opsForValue().set(marketKey, marketData.toString());
+        */
 
         Thread.sleep(2000);
         sendMessage("heartbeat");

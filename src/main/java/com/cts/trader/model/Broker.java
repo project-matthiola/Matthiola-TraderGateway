@@ -12,18 +12,22 @@ public class Broker {
     @Column(nullable = false, name = "broker_name")
     private String brokerName;
 
-    @Column(name = "broker_ip")
-    private String brokerIp;
+    @Column(name = "broker_http")
+    private String brokerHttp;
+
+    @Column(name = "broker_ws")
+    private String brokerWs;
 
     @Column(name = "broker_token")
     private String brokerToken;
 
     public Broker() {}
 
-    public Broker(String brokerID, String brokerName, String brokerIp, String brokerToken) {
+    public Broker(String brokerID, String brokerName, String brokerHttp, String brokerWs, String brokerToken) {
         this.brokerID = brokerID;
         this.brokerName = brokerName;
-        this.brokerIp = brokerIp;
+        this.brokerHttp = brokerHttp;
+        this.brokerWs = brokerWs;
         this.brokerToken = brokerToken;
     }
 
@@ -43,19 +47,27 @@ public class Broker {
         this.brokerName = brokerName;
     }
 
-    public String getBrokerIp() {
-        return brokerIp;
-    }
-
-    public void setBrokerIp(String brokerIp) {
-        this.brokerIp = brokerIp;
-    }
-
     public String getBrokerToken() {
         return brokerToken;
     }
 
     public void setBrokerToken(String brokerToken) {
         this.brokerToken = brokerToken;
+    }
+
+    public String getBrokerHttp() {
+        return brokerHttp;
+    }
+
+    public void setBrokerHttp(String brokerHttp) {
+        this.brokerHttp = brokerHttp;
+    }
+
+    public String getBrokerWs() {
+        return brokerWs;
+    }
+
+    public void setBrokerWs(String brokerWs) {
+        this.brokerWs = brokerWs;
     }
 }

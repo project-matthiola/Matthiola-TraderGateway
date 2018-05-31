@@ -14,14 +14,6 @@ import java.util.*;
 
 @Service("FutureService")
 public class FutureServiceImpl implements FutureService {
-    /*
-    @Autowired
-    private FutureRepository futureRepository;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    */
-
     private FutureRepository futureRepository;
     private JwtTokenUtil jwtTokenUtil;
 
