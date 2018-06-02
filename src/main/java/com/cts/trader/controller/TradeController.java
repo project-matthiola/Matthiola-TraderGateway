@@ -24,7 +24,7 @@ public class TradeController {
     }
 
     @GetMapping("/getTrades")
-    public RestResult getTrades(@RequestParam("futuresID")String futuresID, @RequestParam("selfOnly")String selfOnly, HttpServletRequest request) {
-        return resultGenerator.getSuccessResult(tradeService.getTrades(futuresID, selfOnly, request));
+    public RestResult getTrades(@RequestParam("futuresID")String futuresID, HttpServletRequest request) {
+        return resultGenerator.getSuccessResult(tradeService.getTrades(futuresID, request));
     }
 }

@@ -7,9 +7,8 @@ public interface TradeService {
     /**
      * 获取交易记录
      * @param futuresID 期货ID
-     * @param selfOnly  是否是本人
      * @param request   http请求
      * @return List     交易记录列表
      */
-    List getTrades(String futuresID, String selfOnly, HttpServletRequest request);
+    List getTrades(String futuresID, HttpServletRequest request);
 }

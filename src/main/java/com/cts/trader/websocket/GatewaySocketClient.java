@@ -2,6 +2,7 @@ package com.cts.trader.websocket;
 
 import com.cts.trader.utils.SpringUtil;
 import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +61,7 @@ public class GatewaySocketClient {
     @OnError
     public void onError(Throwable throwable) {
         logger.info("client on close");
+        logger.warn(throwable.getMessage());
     }
 
     @OnClose
@@ -84,17 +86,19 @@ public class GatewaySocketClient {
         System.out.println(jsonKeys);
         String type = jsonObject.getString(jsonKeys.get(0));
         String futuresID = jsonObject.getString(jsonKeys.get(1));
-        JSONObject data = jsonObject.getJSONObject(jsonKeys.get(2));
+        // JSONObject data = jsonObject.getJSONObject(jsonKeys.get(2));
         String redisKey = "";
         switch (type) {
             case "orderBook":
                 redisKey = "orderBook," + brokerMapping.get(session) + "," + futuresID;
+                JSONObject data = jsonObject.getJSONObject(jsonKeys.get(2));
                 redisTemplate.opsForValue().set(redisKey, data.toString());
                 break;
 
             case "trade":
                 redisKey = "trade," + brokerMapping.get(session) + "," + futuresID;
-                redisTemplate.opsForValue().set(redisKey, data.toString());
+                JSONArray data2 = jsonObject.getJSONArray(jsonKeys.get(2));
+                redisTemplate.opsForValue().set(redisKey, data2.toString());
                 break;
         }
         /*
@@ -102,7 +106,7 @@ public class GatewaySocketClient {
         redisTemplate.opsForValue().set(marketKey, marketData.toString());
         */
 
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         sendMessage("heartbeat");
     }
 

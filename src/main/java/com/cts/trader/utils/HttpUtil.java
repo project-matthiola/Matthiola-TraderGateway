@@ -20,7 +20,7 @@ public class HttpUtil {
     @Autowired
     private BrokerRepository brokerRepository;
 
-    public String sendGet (String url, String param, String brokerName) {
+    public String sendGet (String url, String param) {
         String result = "";
         BufferedReader in = null;
         try {

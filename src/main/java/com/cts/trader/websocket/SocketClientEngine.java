@@ -52,10 +52,4 @@ public class SocketClientEngine {
         //this.client.sendMessage("abcabc");
     }
 
-    public static void main(String[] args) throws Exception {
-        //SocketClientEngine clientEngine = new SocketClientEngine();
-        //SocketClientEngine engine = (SocketClientEngine)ContextLoader.getCurrentWebApplicationContext().getBean("SocketClientEngine");
-        //SocketClientEngine engine = (SocketClientEngine)SpringUtil.getBean("SocketClientEngine");
-        //engine.runWs();
-    }
 }

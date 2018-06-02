@@ -75,10 +75,48 @@ public class WebSocketServer {
         String[] params = message.split(",");
         if (params[0].equals("orderBook")) {
             deliverFuturesMarket(session, message);
-        } else if (params[0].equals("order")) {
-            deliverOrderInfos(session, message);
+        } else if (params[0].equals("trade")) {
+            deliverTradeHistory(session, message);
         }
 
+    }
+
+    private void deliverTradeHistory(Session session, String message) {
+        if (!sessionQueue.contains(session)) {
+            logger.info("当前在线人数：" + onlineCount);
+            return;
+        }
+        String[] params = message.split(",");
+        String futureID = params[1];
+        String brokerName = params[2];
+
+        String key = "trade," + brokerName + "," + futureID;
+        System.out.println("key=" + key);
+        String result = getTradeHistoryFromRedis(key);
+        sendMessage(session, result);
+        logger.info("服务端返回: " + result);
+
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            onClose(session);
+        }
+    }
+
+    private String getTradeHistoryFromRedis(String key) {
+        redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
+
+        if (!redisTemplate.hasKey(key)) return null;
+
+        String trades = (String)redisTemplate.opsForValue().get(key);
+        //JSONObject jsonTrades = JSONObject.fromObject(trades);
+        JSONArray jsonTrades = JSONArray.fromObject(trades);
+        JSONObject jsonResult = new JSONObject();
+        jsonResult.put("type", "trade");
+        jsonResult.put("data", jsonTrades);
+
+        return jsonResult.toString();
     }
 
     private void deliverOrderInfos(Session session, String message) {
@@ -107,7 +145,13 @@ public class WebSocketServer {
 
         if (!redisTemplate.hasKey(key)) return null;
 
-        return (String)redisTemplate.opsForValue().get(key);
+        String market = (String)redisTemplate.opsForValue().get(key);
+        JSONObject jsonMarket = JSONObject.fromObject(market);
+        JSONObject jsonResult = new JSONObject();
+        jsonResult.put("type", "orderBook");
+        jsonResult.put("data", jsonMarket);
+
+        return jsonResult.toString();
     }
 
     private void deliverFuturesMarket(Session session, String message) {
@@ -119,7 +163,7 @@ public class WebSocketServer {
         String futureID = params[1];
         String brokerName = params[2];
 
-        String key = brokerName + "," + futureID;
+        String key = "orderBook," + brokerName + "," + futureID;
         System.out.println("key=" + key);
         String result = getFuturesMarketFromRedis(key);
         sendMessage(session, result);

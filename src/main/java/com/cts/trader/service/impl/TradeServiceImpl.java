@@ -1,15 +1,53 @@
 package com.cts.trader.service.impl;
 
+import com.cts.trader.model.Broker;
+import com.cts.trader.repository.BrokerRepository;
 import com.cts.trader.service.TradeService;
+import com.cts.trader.utils.HttpUtil;
+import com.cts.trader.utils.JwtTokenUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("tradeService")
 public class TradeServiceImpl implements TradeService {
+    private JwtTokenUtil jwtTokenUtil;
+    private BrokerRepository brokerRepository;
+
+    @Autowired
+    public TradeServiceImpl(BrokerRepository brokerRepository, JwtTokenUtil jwtTokenUtil) {
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.brokerRepository = brokerRepository;
+    }
+
     @Override
-    public List getTrades(String futuresID, String selfOnly, HttpServletRequest request) {
-        return null;
+    public List getTrades(String futuresID, HttpServletRequest request) {
+        String username = jwtTokenUtil.parseUsername(request);
+        String params = "";
+        if (futuresID.equals("")) params += "futures_id=null";
+        else params = params + "futures_id=" + futuresID;
+
+        params = params + "&trader=" + username;
+        System.out.println(params);
+
+        List<Broker> brokers = brokerRepository.findAll();
+
+        List tradeList = new ArrayList();
+        for (Broker broker : brokers) {
+            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/trades", params);
+            JSONObject jsonResult = JSONObject.fromObject(result);
+            JSONArray jsonArray = jsonResult.getJSONArray("data");
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                tradeList.add(object);
+            }
+        }
+
+        return tradeList;
     }
 }

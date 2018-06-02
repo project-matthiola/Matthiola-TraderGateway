@@ -26,11 +26,14 @@ import java.util.UUID;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
-    @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    private BrokerRepository brokerRepository;
 
     @Autowired
-    private BrokerRepository brokerRepository;
+    public OrderServiceImpl(BrokerRepository brokerRepository, JwtTokenUtil jwtTokenUtil) {
+        this.brokerRepository = brokerRepository;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
     @Async
     public void iceburgOrder(Order order, String username) {
@@ -91,6 +94,7 @@ public class OrderServiceImpl implements OrderService {
         orderSingle.set(new Symbol(order.getFutureID()));
         orderSingle.set(new OrderQty(order.getAmount()));
         orderSingle.set(new Price(order.getPrice()));
+        orderSingle.set(new StopPx(order.getPrice2()));
         orderSingle.set(new TransactTime(order.getTimeStamp()));
 
         try {
@@ -140,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
 
         List orderList = new ArrayList();
         for (Broker broker : brokers) {
-            String result = new HttpUtil().sendGet("/orders", params, broker.getBrokerName());
+            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/orders", params);
             JSONObject jsonResult = JSONObject.fromObject(result);
             JSONArray jsonArray = jsonResult.getJSONArray("data");
             for (int i = 0; i < jsonArray.size(); i++) {

@@ -15,6 +15,8 @@ public class Order implements Serializable {
 
     private Double price;
 
+    private Double price2;
+
     private Double amount;
 
     private String brokerName;
@@ -24,12 +26,13 @@ public class Order implements Serializable {
     public Order() {}
 
     public Order(UUID orderID, String futureID, char type, char side,
-                 Double price, Double amount, String brokerName, LocalDateTime timeStamp) {
+                 Double price, Double price2, Double amount, String brokerName, LocalDateTime timeStamp) {
         this.orderID = orderID;
         this.futureID = futureID;
         this.type = type;
         this.side = side;
         this.price = price;
+        this.price2 = price;
         this.amount = amount;
         this.brokerName = brokerName;
         this.timeStamp = timeStamp;
@@ -97,5 +100,13 @@ public class Order implements Serializable {
 
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public Double getPrice2() {
+        return price2;
+    }
+
+    public void setPrice2(Double price2) {
+        this.price2 = price2;
     }
 }
