@@ -19,6 +19,12 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.lang.reflect.Method;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description Redis配置
+ * @version 1.0.0
+ **/
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {

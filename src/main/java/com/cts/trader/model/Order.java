@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description Order
+ * @version 1.0.0
+ **/
 public class Order implements Serializable {
     private UUID orderID;
 

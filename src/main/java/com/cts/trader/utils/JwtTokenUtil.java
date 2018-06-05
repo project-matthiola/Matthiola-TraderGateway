@@ -12,6 +12,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @decription JWT工具类
+ * @version 1.0.0
+ **/
 @Component
 public class JwtTokenUtil implements Serializable {
     /**
@@ -21,7 +27,6 @@ public class JwtTokenUtil implements Serializable {
 
     /**
      * 从数据声明生成令牌
-     *
      * @param claims 数据声明
      * @return 令牌
      */
@@ -32,7 +37,6 @@ public class JwtTokenUtil implements Serializable {
 
     /**
      * 从令牌中获取数据声明
-     *
      * @param token 令牌
      * @return 数据声明
      */
@@ -48,7 +52,6 @@ public class JwtTokenUtil implements Serializable {
 
     /**
      * 生成令牌
-     *
      * @param userDetails 用户
      * @return 令牌
      */
@@ -62,7 +65,6 @@ public class JwtTokenUtil implements Serializable {
 
     /**
      * 从令牌中获取用户名
-     *
      * @param token 令牌
      * @return 用户名
      */
@@ -79,7 +81,6 @@ public class JwtTokenUtil implements Serializable {
 
     /**
      * 判断令牌是否过期
-     *
      * @param token 令牌
      * @return 是否过期
      */
@@ -95,7 +96,6 @@ public class JwtTokenUtil implements Serializable {
 
     /**
      * 刷新令牌
-     *
      * @param token 原令牌
      * @return 新令牌
      */
@@ -113,7 +113,6 @@ public class JwtTokenUtil implements Serializable {
 
     /**
      * 验证令牌
-     *
      * @param token  令牌
      * @param userDetails 用户
      * @return 是否有效
@@ -125,7 +124,6 @@ public class JwtTokenUtil implements Serializable {
 
     /**
      * 从Header获取用户名
-     *
      * @param request Http请求
      * @return 用户名
      */

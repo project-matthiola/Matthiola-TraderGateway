@@ -1,7 +1,7 @@
 package com.cts.trader.utils;
 
-import com.cts.trader.model.Broker;
 import com.cts.trader.repository.BrokerRepository;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,36 +15,45 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @desciprtion HTTP工具类
+ * @version 1.0.0
+ **/
 @Component
 public class HttpUtil {
     @Autowired
     private BrokerRepository brokerRepository;
 
-    public String sendGet (String url, String param) {
+    /**
+     * HTTP GET请求
+     * @param url url
+     * @param param 参数
+     * @param token token
+     * @return 字符串结果
+     */
+    public String sendGet (String url, String param, String token) {
         String result = "";
         BufferedReader in = null;
         try {
-            /*
-            Broker broker = brokerRepository.findBrokerByBrokerName(brokerName);
-            String brokerToken = broker.getBrokerToken();
-            String brokerUrl = broker.getBrokerIp();
-            url = brokerUrl + url;
-            */
             String urlNameString = (param != null) ? url + "?" + param : url;
-            System.out.println(url);
+            System.out.println(urlNameString);
             URL readUrl = new URL(urlNameString);
             URLConnection connection = readUrl.openConnection();
             connection.setConnectTimeout(2000);
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36");
-            //connection.setRequestProperty("authorization", "Bearer " + brokerToken);
+            connection.setRequestProperty("authorization", "Bearer " + token);
             connection.connect();
 
             Map<String, List<String>> map = connection.getHeaderFields();
+            /*
             for (String key : map.keySet()) {
                 System.out.println(key + "--->" + map.get(key));
             }
+            */
             in = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
             String line;
@@ -66,6 +75,12 @@ public class HttpUtil {
         return result;
     }
 
+    /**
+     * HTTP POST请求
+     * @param url url
+     * @param param 参数
+     * @return 字符串结果
+     */
     public String sendPost (String url, String param) {
         PrintWriter out = null;
         BufferedReader in = null;
@@ -112,5 +127,14 @@ public class HttpUtil {
         //JSONObject jsonResult = JSONObject.fromObject(result);
         //JSONObject jsonData = jsonResult.getJSONObject("data");
         //System.out.println(jsonData);
+        String param = "futures_id=123";
+        String result = new HttpUtil().sendGet("https://private-8a634-matthiola.apiary-mock.com/trades", param, "123");
+        //System.out.println(result);
+        JSONObject jsonResult = JSONObject.fromObject(result);
+        JSONArray jsonArray = jsonResult.getJSONArray("data");
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject object = jsonArray.getJSONObject(i);
+            System.out.println(object);
+        }
     }
 }

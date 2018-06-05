@@ -17,6 +17,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description TraderService实现
+ * @version 1.0.0
+ **/
 @Service("TraderService")
 public class TraderServiceImpl implements TraderService {
     private TraderRepository traderRepository;

@@ -5,6 +5,12 @@ import com.cts.trader.model.Order;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description OrderService接口
+ * @version 1.0.0
+ **/
 public interface OrderService {
     /**
      * 发送订单

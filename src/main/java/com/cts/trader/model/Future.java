@@ -6,6 +6,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description Future
+ * @version 1.0.0
+ **/
 @Entity
 @Table(name = "Futures")
 public class Future implements Serializable {

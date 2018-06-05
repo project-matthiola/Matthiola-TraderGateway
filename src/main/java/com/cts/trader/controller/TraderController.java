@@ -15,6 +15,12 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.Date;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description TraderController
+ * @version 1.0.0
+ **/
 @RestController
 @RequestMapping("/trader")
 @Validated

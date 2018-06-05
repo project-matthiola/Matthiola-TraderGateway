@@ -23,6 +23,12 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description WebsocketServer
+ * @version 1.0.0
+ **/
 @ServerEndpoint("/websocket")
 @Component
 public class WebSocketServer {
@@ -97,7 +103,7 @@ public class WebSocketServer {
         logger.info("服务端返回: " + result);
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
             onClose(session);
@@ -110,34 +116,12 @@ public class WebSocketServer {
         if (!redisTemplate.hasKey(key)) return null;
 
         String trades = (String)redisTemplate.opsForValue().get(key);
-        //JSONObject jsonTrades = JSONObject.fromObject(trades);
         JSONArray jsonTrades = JSONArray.fromObject(trades);
         JSONObject jsonResult = new JSONObject();
         jsonResult.put("type", "trade");
         jsonResult.put("data", jsonTrades);
 
         return jsonResult.toString();
-    }
-
-    private void deliverOrderInfos(Session session, String message) {
-        if (!sessionQueue.contains(session)) {
-            logger.info("当前在线人数：" + onlineCount);
-            return;
-        }
-        /*
-        String[] params = message.split(",");
-        String futureID = params[1];
-        String status = params[2];
-        System.out.println(futureID + "," + status);
-
-        List<Broker> brokers = brokerRepository.findAll();
-        List resultList = new ArrayList();
-        for (Broker broker : brokers) {
-            String result = new HttpUtil().sendGet("url", null, broker.getBrokerName());
-            JSONObject jsonResult = JSONObject.fromObject(result);
-            JSONArray jsonArray = jsonResult.getJSONArray("data");
-        }
-        */
     }
 
     private String getFuturesMarketFromRedis(String key) {
@@ -169,59 +153,8 @@ public class WebSocketServer {
         sendMessage(session, result);
         logger.info("服务端返回: " + result);
 
-        /*
-        int total = (int)(Math.random() * 50);
-        JSONArray bidsList = new JSONArray();
-        JSONArray asksList = new JSONArray();
-        for (int i = 1;i <= total; i++) {
-            List tmp = new ArrayList();
-            tmp.add(i * 0.8);
-            tmp.add(i * 100);
-            asksList.add(tmp);
-        }
-        total = (int)(Math.random() * 50);
-        for (int i = 1;i <= total; i++) {
-            List tmp = new ArrayList();
-            tmp.add((50 - i) * 0.8);
-            tmp.add(i * 100);
-            bidsList.add(tmp);
-        }
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("bids", bidsList);
-        jsonObject.put("asks", asksList);
-        System.out.println(jsonObject);
-        String res = jsonObject.toString();
-        sendMessage(session, res);
-
-        /*
-        int total = (int)(Math.random() * 30);
-        JSONArray jsonArraySells = new JSONArray();
-        JSONArray jsonArrayBuys = new JSONArray();
-        for (int i = 0;i < total;i++) {
-            JSONObject json1 = new JSONObject();
-            json1.put("id", i);
-            json1.put("price", i * 0.9);
-            json1.put("quantity", i * 100);
-            jsonArraySells.add(json1);
-        }
-        total = (int)(Math.random() * 30);
-        for (int i = 0;i < total;i++) {
-            JSONObject json2 = new JSONObject();
-            json2.put("id", i);
-            json2.put("price", (30 - i) * 0.9);
-            json2.put("quantity", i * 100);
-            jsonArrayBuys.add(json2);
-        }
-        JSONObject orderBook = new JSONObject();
-        orderBook.put("sells", jsonArraySells);
-        orderBook.put("buys", jsonArrayBuys);
-
-        String res = orderBook.toString();
-        sendMessage(session, res);
-        logger.info("服务端返回消息：" + res);
-        */
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
             onClose(session);

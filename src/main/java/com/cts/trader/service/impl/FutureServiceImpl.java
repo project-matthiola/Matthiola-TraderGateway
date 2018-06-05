@@ -9,9 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description FutureService实现
+ * @version 1.0.0
+ **/
 @Service("FutureService")
 public class FutureServiceImpl implements FutureService {
     private FutureRepository futureRepository;
@@ -26,7 +31,6 @@ public class FutureServiceImpl implements FutureService {
     @Cacheable(cacheNames = "futureslist")
     @Override
     public List findAllFutures() {
-        //List<Future> futureList = futureRepository.findAll();
         List<Future> futureList = futureRepository.findFuturesByExpired("false");
         List futures = new ArrayList();
         Set<String> futuresNameSet = new HashSet<>();

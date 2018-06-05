@@ -1,33 +1,61 @@
 Manifest-Version: 1.0
-Class-Path: spring-expression-5.0.5.RELEASE.jar tomcat-embed-websocket
- -8.5.29.jar snakeyaml-1.19.jar spring-context-5.0.5.RELEASE.jar logba
- ck-classic-1.2.3.jar spring-boot-starter-2.0.1.RELEASE.jar jackson-da
- tatype-jdk8-2.9.5.jar spring-web-5.0.5.RELEASE.jar jackson-module-par
- ameter-names-2.9.5.jar spring-boot-devtools-2.0.1.RELEASE.jar spring-
- orm-5.0.5.RELEASE.jar spring-data-rest-webmvc-3.0.6.RELEASE.jar sprin
- g-data-commons-2.0.6.RELEASE.jar jackson-databind-2.9.5.jar javassist
- -3.22.0-GA.jar validation-api-2.0.1.Final.jar jboss-logging-3.3.2.Fin
- al.jar spring-boot-starter-jdbc-2.0.1.RELEASE.jar hibernate-core-5.2.
- 16.Final.jar spring-jdbc-5.0.5.RELEASE.jar mysql-connector-java-5.1.4
- 6.jar jandex-2.0.3.Final.jar antlr-2.7.7.jar javax.annotation-api-1.3
- .2.jar spring-webmvc-5.0.5.RELEASE.jar logback-core-1.2.3.jar spring-
- aop-5.0.5.RELEASE.jar spring-plugin-core-1.2.0.RELEASE.jar spring-hat
- eoas-0.24.0.RELEASE.jar spring-boot-starter-data-jpa-2.0.1.RELEASE.ja
- r spring-data-jpa-2.0.6.RELEASE.jar classmate-1.3.4.jar spring-beans-
- 5.0.5.RELEASE.jar jackson-datatype-jsr310-2.9.5.jar evo-inflector-1.2
- .2.jar javax.transaction-api-1.2.jar jackson-annotations-2.9.0.jar lo
- g4j-to-slf4j-2.10.0.jar hibernate-commons-annotations-5.0.1.Final.jar
-  HikariCP-2.7.8.jar slf4j-api-1.7.25.jar spring-boot-starter-web-2.0.
- 1.RELEASE.jar tomcat-embed-el-8.5.29.jar hibernate-jpa-2.1-api-1.0.0.
- Final.jar spring-boot-2.0.1.RELEASE.jar aspectjweaver-1.8.13.jar spri
- ng-boot-starter-aop-2.0.1.RELEASE.jar spring-boot-starter-tomcat-2.0.
- 1.RELEASE.jar spring-boot-starter-json-2.0.1.RELEASE.jar spring-boot-
- starter-data-rest-2.0.1.RELEASE.jar spring-aspects-5.0.5.RELEASE.jar 
- spring-boot-autoconfigure-2.0.1.RELEASE.jar dom4j-1.6.1.jar spring-co
- re-5.0.5.RELEASE.jar spring-data-rest-core-3.0.6.RELEASE.jar tomcat-e
- mbed-core-8.5.29.jar jackson-core-2.9.5.jar spring-tx-5.0.5.RELEASE.j
- ar spring-jcl-5.0.5.RELEASE.jar spring-boot-starter-logging-2.0.1.REL
- EASE.jar log4j-api-2.10.0.jar hibernate-validator-6.0.9.Final.jar jul
- -to-slf4j-1.7.25.jar
+Class-Path: classmate-1.3.4.jar maven-plugin-api-3.5.0.jar netty-resol
+ ver-4.1.23.Final.jar spring-boot-starter-logging-2.0.1.RELEASE.jar lo
+ g4j-to-slf4j-2.10.0.jar spring-context-support-5.0.5.RELEASE.jar spri
+ ng-boot-starter-data-jpa-2.0.1.RELEASE.jar HikariCP-2.7.8.jar jul-to-
+ slf4j-1.7.25.jar spring-boot-starter-security-2.0.1.RELEASE.jar sprin
+ g-boot-starter-2.0.1.RELEASE.jar spring-data-commons-2.0.6.RELEASE.ja
+ r jackson-datatype-jdk8-2.9.5.jar evo-inflector-1.2.2.jar spring-orm-
+ 5.0.5.RELEASE.jar jackson-databind-2.9.5.jar jackson-core-2.9.5.jar j
+ ackson-module-parameter-names-2.9.5.jar spring-boot-starter-data-redi
+ s-2.0.2.RELEASE.jar spring-security-core-5.0.4.RELEASE.jar reactive-s
+ treams-1.0.2.jar validation-api-2.0.1.Final.jar slf4j-api-1.7.25.jar 
+ spring-boot-starter-web-2.0.1.RELEASE.jar commons-beanutils-1.9.3.jar
+  spring-oxm-5.0.5.RELEASE.jar plexus-classworlds-2.5.2.jar spring-sec
+ urity-web-5.0.4.RELEASE.jar commons-collections-3.2.2.jar spring-cont
+ ext-5.0.5.RELEASE.jar maven-artifact-manager-2.2.1.jar reactor-core-3
+ .1.6.RELEASE.jar hibernate-validator-6.0.9.Final.jar jackson-annotati
+ ons-2.9.0.jar netty-common-4.1.23.Final.jar cdi-api-1.0.jar spring-bo
+ ot-starter-data-rest-2.0.1.RELEASE.jar spring-beans-5.0.5.RELEASE.jar
+  quickfixj-all-2.0.0.jar jsr250-api-1.0.jar spring-websocket-5.0.5.RE
+ LEASE.jar netty-buffer-4.1.23.Final.jar netty-handler-4.1.23.Final.ja
+ r jedis-2.9.0.jar spring-boot-starter-tomcat-2.0.1.RELEASE.jar junit-
+ 4.12.jar spring-boot-devtools-2.0.1.RELEASE.jar plexus-container-defa
+ ult-1.0-alpha-9-stable-1.jar tomcat-embed-core-8.5.29.jar jaxen-1.1.6
+ .jar spring-data-redis-2.0.6.RELEASE.jar aspectjweaver-1.8.13.jar net
+ ty-codec-4.1.23.Final.jar hamcrest-core-1.3.jar hibernate-core-5.2.16
+ .Final.jar hibernate-jpa-2.1-api-1.0.0.Final.jar quickfixj-codegenera
+ tor-2.0.0.jar spring-messaging-5.0.5.RELEASE.jar maven-artifact-3.5.0
+ .jar spring-aspects-5.0.5.RELEASE.jar classworlds-1.1-alpha-2.jar jac
+ kson-datatype-jsr310-2.9.5.jar jjwt-0.7.0.jar log4j-api-2.10.0.jar qu
+ ickfixj-messages-all-2.0.0.jar plexus-component-annotations-1.5.5.jar
+  plexus-interpolation-1.11.jar netty-transport-4.1.23.Final.jar maven
+ -model-3.5.0.jar spring-boot-starter-jdbc-2.0.1.RELEASE.jar spring-ao
+ p-5.0.5.RELEASE.jar spring-web-5.0.5.RELEASE.jar dom4j-1.6.1.jar spri
+ ng-core-5.0.5.RELEASE.jar javax.transaction-api-1.2.jar tomcat-embed-
+ el-8.5.29.jar quickfixj-dictgenerator-2.0.0.jar snakeyaml-1.19.jar ez
+ morph-1.0.6.jar spring-boot-starter-websocket-2.0.1.RELEASE.jar sprin
+ g-jdbc-5.0.5.RELEASE.jar spring-boot-2.0.1.RELEASE.jar spring-securit
+ y-config-5.0.4.RELEASE.jar Java-WebSocket-1.3.8.jar spring-data-keyva
+ lue-2.0.6.RELEASE.jar spring-expression-5.0.5.RELEASE.jar spring-data
+ -rest-core-3.0.6.RELEASE.jar maven-project-2.2.1.jar org.eclipse.sisu
+ .inject-0.3.3.jar spring-data-jpa-2.0.6.RELEASE.jar commons-lang3-3.7
+ .jar spring-boot-starter-aop-2.0.1.RELEASE.jar mina-core-2.0.16.jar a
+ ntlr-2.7.7.jar javassist-3.22.0-GA.jar jboss-logging-3.3.2.Final.jar 
+ Saxon-HE-9.8.0-4.jar plexus-utils-3.0.24.jar spring-data-rest-webmvc-
+ 3.0.6.RELEASE.jar org.eclipse.sisu.plexus-0.3.3.jar javax.inject-1.ja
+ r backport-util-concurrent-3.1.jar spring-security-crypto-5.0.4.RELEA
+ SE.jar logback-classic-1.2.3.jar quickfixj-core-2.0.0.jar maven-setti
+ ngs-2.2.1.jar commons-lang-2.6.jar maven-plugin-registry-2.2.1.jar sp
+ ring-webmvc-5.0.5.RELEASE.jar json-lib-2.4-jdk15.jar mysql-connector-
+ java-5.1.46.jar commons-logging-1.2.jar logback-core-1.2.3.jar spring
+ -plugin-core-1.2.0.RELEASE.jar spring-boot-autoconfigure-2.0.1.RELEAS
+ E.jar commons-pool2-2.5.0.jar maven-profile-2.2.1.jar hibernate-commo
+ ns-annotations-5.0.1.Final.jar spring-hateoas-0.24.0.RELEASE.jar wago
+ n-provider-api-1.0-beta-6.jar spring-jcl-5.0.5.RELEASE.jar maven-repo
+ sitory-metadata-2.2.1.jar tomcat-embed-websocket-8.5.29.jar lettuce-c
+ ore-5.0.3.RELEASE.jar spring-tx-5.0.5.RELEASE.jar jandex-2.0.3.Final.
+ jar javax.annotation-api-1.3.2.jar spring-boot-starter-json-2.0.1.REL
+ EASE.jar
 Main-Class: com.cts.trader.TraderApplication
 

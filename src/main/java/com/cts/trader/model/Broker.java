@@ -2,6 +2,12 @@ package com.cts.trader.model;
 
 import javax.persistence.*;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description Broker
+ * @version 1.0.0
+ **/
 @Entity
 @Table(name = "Broker")
 public class Broker {

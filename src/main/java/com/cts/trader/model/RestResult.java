@@ -1,5 +1,11 @@
 package com.cts.trader.model;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description RestResult
+ * @version 1.0.0
+ **/
 public class RestResult {
     //状态码
     private int status;

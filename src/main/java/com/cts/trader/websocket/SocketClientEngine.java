@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description WebsocketClientEngine
+ * @version 1.0.0
+ **/
 @Component(value = "SocketClientEngine")
 public class SocketClientEngine {
     private BrokerRepository brokerRepository;

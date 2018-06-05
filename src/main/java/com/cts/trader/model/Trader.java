@@ -7,6 +7,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description Trader
+ * @version 1.0.0
+ **/
 @Entity
 @Table(name = "Trader")
 public class Trader implements Serializable {

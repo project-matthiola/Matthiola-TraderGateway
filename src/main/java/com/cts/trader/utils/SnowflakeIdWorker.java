@@ -1,5 +1,11 @@
 package com.cts.trader.utils;
 /**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description 不重复数字ID生成器
+ * @version 1.0.0
+ **/
+/**
  * Twitter_Snowflake<br>
  * SnowFlake的结构如下(每部分用-分开):<br>
  * 0 - 0000000000 0000000000 0000000000 0000000000 0 - 00000 - 00000 - 000000000000 <br>

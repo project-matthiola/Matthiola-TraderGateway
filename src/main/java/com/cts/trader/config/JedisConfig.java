@@ -7,6 +7,12 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description Jedis配置
+ * @version 1.0.0
+ **/
 @Configuration
 public class JedisConfig {
     @Value("${spring.redis.host}")

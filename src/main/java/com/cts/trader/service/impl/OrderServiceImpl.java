@@ -24,6 +24,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description OrderService实现
+ * @version 1.0.0
+ **/
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
     private JwtTokenUtil jwtTokenUtil;
@@ -78,10 +84,12 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderID(UUID.randomUUID());
         order.setTimeStamp(LocalDateTime.now(ZoneId.of("UTC")));
 
+        /*
         if (order.getAmount() > 10000.0) {
             iceburgOrder(order, username);
             return true;
         }
+        */
 
         NewOrderSingle orderSingle = new NewOrderSingle();
         orderSingle.getHeader().setField(new MsgType(MsgType.ORDER_SINGLE));
@@ -144,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
 
         List orderList = new ArrayList();
         for (Broker broker : brokers) {
-            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/orders", params);
+            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/orders", params, broker.getBrokerToken());
             JSONObject jsonResult = JSONObject.fromObject(result);
             JSONArray jsonArray = jsonResult.getJSONArray("data");
             for (int i = 0; i < jsonArray.size(); i++) {

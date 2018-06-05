@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description TradeService实现
+ * @version 1.0.0
+ **/
 @Service("tradeService")
 public class TradeServiceImpl implements TradeService {
     private JwtTokenUtil jwtTokenUtil;
@@ -39,7 +45,7 @@ public class TradeServiceImpl implements TradeService {
 
         List tradeList = new ArrayList();
         for (Broker broker : brokers) {
-            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/trades", params);
+            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/trades", params, broker.getBrokerToken());
             JSONObject jsonResult = JSONObject.fromObject(result);
             JSONArray jsonArray = jsonResult.getJSONArray("data");
             for (int i = 0; i < jsonArray.size(); i++) {

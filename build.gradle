@@ -31,16 +31,18 @@ configurations {
 	providedRuntime
 }
 
+jar {
+    baseName = 'trader-gateway'
+    version = '1.0.0'
+    manifest {
+        attributes 'Main-Class': 'com.cts.trader.TraderApplication'
+    }
+}
+
 dependencies {
-	//compile('org.springframework.boot:spring-boot-starter-aop')
 	compile('io.jsonwebtoken:jjwt:0.7.0')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
-	//compile('org.springframework.boot:spring-boot-starter-data-mongodb')
-	//compile('org.springframework.boot:spring-boot-starter-data-neo4j')
-	//compile('org.springframework.boot:spring-boot-starter-data-redis')
-	//compile('org.springframework.boot:spring-boot-starter-jdbc')
-	//compile('org.springframework.boot:spring-boot-starter-jersey')
 	compile('org.springframework.boot:spring-boot-starter-security')
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.0.4.RELEASE'
     compile('org.springframework.boot:spring-boot-starter-web')
@@ -54,7 +56,7 @@ dependencies {
     // https://mvnrepository.com/artifact/redis.clients/jedis
     compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
 
-
+	// json
     compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.4', classifier: 'jdk15'
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'

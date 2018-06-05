@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description BrokerService实现
+ * @version 1.0.0
+ **/
 @Service("brokerService")
 public class BrokerServiceImpl implements BrokerService {
     private BrokerRepository brokerRepository;

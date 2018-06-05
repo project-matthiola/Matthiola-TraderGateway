@@ -3,6 +3,12 @@ package com.cts.trader.service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description TradeService接口
+ * @version 1.0.0
+ **/
 public interface TradeService {
     /**
      * 获取交易记录

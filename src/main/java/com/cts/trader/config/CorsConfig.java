@@ -6,6 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description 跨域配置
+ * @version 1.0.0
+ **/
 @Configuration
 public class CorsConfig {
     /**

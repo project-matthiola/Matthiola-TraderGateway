@@ -3,6 +3,12 @@ package com.cts.trader.fix;
 import org.springframework.stereotype.Component;
 import quickfix.*;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description InitiatorApplication
+ * @version 1.0.0
+ **/
 @Component
 public class InitiatorApplication extends MessageCracker implements Application {
     //private static volatile SessionID sessionID;

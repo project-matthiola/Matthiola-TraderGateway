@@ -6,6 +6,12 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description SpringBean工具类
+ * @version 1.0.0
+ **/
 @Configuration
 @Component
 public class SpringUtil implements ApplicationContextAware {
@@ -20,22 +26,21 @@ public class SpringUtil implements ApplicationContextAware {
         return applicationContext;
     }
 
-    /*
-    public static Object getBean(Class classname) {
-        try {
-            Object _restTemplate = applicationContext.getBean(classname);
-            return _restTemplate;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    */
-
+    /**
+     * 通过类型获取bean
+     * @param clazz 类
+     * @param <T>
+     * @return bean
+     */
     public static <T> T getBean(Class<T> clazz){
         return getApplicationContext().getBean(clazz);
     }
 
+    /**
+     * 通过bean名称获取bean
+     * @param name 名称
+     * @return bean
+     */
     public static Object getBean(String name) {
         try {
             Object _restTemplate = getApplicationContext().getBean(name);
@@ -46,6 +51,13 @@ public class SpringUtil implements ApplicationContextAware {
         }
     }
 
+    /**
+     * 通过bean名称和类型获取bean
+     * @param name 名称
+     * @param clazz 类型
+     * @param <T>
+     * @return bean
+     */
     public static <T> T getBean(String name,Class<T> clazz){
         return getApplicationContext().getBean(name, clazz);
     }

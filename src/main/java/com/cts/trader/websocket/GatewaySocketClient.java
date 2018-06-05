@@ -22,11 +22,25 @@ import java.net.URI;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description WebsocketClient
+ * @version 1.0.0
+ **/
 @ClientEndpoint
 @Component
 public class GatewaySocketClient {
+    // 日志记录
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    // 服务端session
     private Session session;
+
+    // Redis连接
+    private RedisTemplate redisTemplate;
+
+    // 全局变量，记录session和名称的映射
     private static Map<Session, String> brokerMapping = new ConcurrentHashMap<>();
 
     public void setBrokerMapping(String brokerName) {
@@ -37,7 +51,6 @@ public class GatewaySocketClient {
         return brokerMapping;
     }
 
-    private RedisTemplate redisTemplate;
 
     public static GatewaySocketClient connect(String url) throws Exception {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -48,7 +61,6 @@ public class GatewaySocketClient {
 
     public void connect2Url(String url) throws Exception {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-        //this.brokerName = brokerName;
         this.session = container.connectToServer(GatewaySocketClient.class, new URI(url));
     }
 
@@ -106,7 +118,7 @@ public class GatewaySocketClient {
         redisTemplate.opsForValue().set(marketKey, marketData.toString());
         */
 
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         sendMessage("heartbeat");
     }
 

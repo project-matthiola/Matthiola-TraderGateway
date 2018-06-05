@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/5
+ * @description TradeController
+ * @version 1.0.0
+ **/
 @RestController
 @RequestMapping("/trade")
 public class TradeController {
