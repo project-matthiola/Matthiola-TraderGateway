@@ -83,7 +83,7 @@ public class GatewaySocketClient {
 
     @OnMessage
     public void onMessage(String message) throws Exception {
-        logger.info("client on message" + message);
+        //logger.info("client on message" + message);
 
         redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
 
@@ -95,7 +95,7 @@ public class GatewaySocketClient {
             jsonKeys.add(key);
         }
 
-        System.out.println(jsonKeys);
+        //System.out.println(jsonKeys);
         String type = jsonObject.getString(jsonKeys.get(0));
         String futuresID = jsonObject.getString(jsonKeys.get(1));
         // JSONObject data = jsonObject.getJSONObject(jsonKeys.get(2));

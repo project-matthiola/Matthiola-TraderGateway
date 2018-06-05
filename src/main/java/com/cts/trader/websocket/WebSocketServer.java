@@ -76,7 +76,7 @@ public class WebSocketServer {
 
     @OnMessage
     public void onMessage(final Session session, String message) {
-        logger.info("来自客户端的消息：" + message);
+        //logger.info("来自客户端的消息：" + message);
 
         String[] params = message.split(",");
         if (params[0].equals("orderBook")) {
@@ -97,7 +97,7 @@ public class WebSocketServer {
         String brokerName = params[2];
 
         String key = "trade," + brokerName + "," + futureID;
-        System.out.println("key=" + key);
+        //System.out.println("key=" + key);
         String result = getTradeHistoryFromRedis(key);
         sendMessage(session, result);
         logger.info("服务端返回: " + result);
@@ -148,7 +148,7 @@ public class WebSocketServer {
         String brokerName = params[2];
 
         String key = "orderBook," + brokerName + "," + futureID;
-        System.out.println("key=" + key);
+        //System.out.println("key=" + key);
         String result = getFuturesMarketFromRedis(key);
         sendMessage(session, result);
         logger.info("服务端返回: " + result);

@@ -23,9 +23,6 @@ import java.util.Map;
  **/
 @Component
 public class HttpUtil {
-    @Autowired
-    private BrokerRepository brokerRepository;
-
     /**
      * HTTP GET请求
      * @param url url
