@@ -43,6 +43,8 @@ public class GatewaySocketClient {
     // 全局变量，记录session和名称的映射
     private static Map<Session, String> brokerMapping = new ConcurrentHashMap<>();
 
+    private Map<String, Map<String, List<List>>> orderBook = new HashMap<>();
+
     public void setBrokerMapping(String brokerName) {
         brokerMapping.put(this.session, brokerName);
     }
@@ -81,24 +83,22 @@ public class GatewaySocketClient {
         this.session.close();
     }
 
+    /*
     @OnMessage
     public void onMessage(String message) throws Exception {
-        //logger.info("client on message" + message);
+        logger.info("client on message" + message);
 
         redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
 
         JSONObject jsonObject = JSONObject.fromObject(message);
         Set<String> keySet = jsonObject.keySet();
-        //String[] jsonKeys = (String[])keySet.toArray();
         List<String> jsonKeys = new ArrayList<String>();
         for (String key : keySet) {
             jsonKeys.add(key);
         }
 
-        //System.out.println(jsonKeys);
         String type = jsonObject.getString(jsonKeys.get(0));
         String futuresID = jsonObject.getString(jsonKeys.get(1));
-        // JSONObject data = jsonObject.getJSONObject(jsonKeys.get(2));
         String redisKey = "";
         switch (type) {
             case "orderBook":
@@ -113,13 +113,99 @@ public class GatewaySocketClient {
                 redisTemplate.opsForValue().set(redisKey, data2.toString());
                 break;
         }
-        /*
-        JSONObject marketData = jsonObject.getJSONObject("data");
-        redisTemplate.opsForValue().set(marketKey, marketData.toString());
-        */
 
         Thread.sleep(10000);
         sendMessage("heartbeat");
+    }
+    */
+
+    @OnMessage
+    public void onMessage(String message) throws Exception {
+        redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
+
+        JSONObject jsonMsg = JSONObject.fromObject(message);
+        Set<String> keySet = jsonMsg.keySet();
+        List<String> jsonKeys = new ArrayList<>(keySet);
+
+        String type = jsonMsg.getString(jsonKeys.get(0)); // 'orderBook','trade'
+        String mode = jsonMsg.getString(jsonKeys.get(1)); // 'snapshot','update'
+        String futuresID = jsonMsg.getString(jsonKeys.get(2));
+        String redisKey = "";
+        switch (type) {
+            case "orderBook":
+                redisKey = "orderBook," + brokerMapping.get(session) + "," + futuresID;
+                if (mode.equals("snapshot")) {
+                    JSONObject data = jsonMsg.getJSONObject(jsonKeys.get(3));
+                    redisTemplate.opsForValue().set(redisKey, data.toString());
+                } else if (mode.equals("update")) {
+                    JSONArray changes = jsonMsg.getJSONArray(jsonKeys.get(3));
+
+                    JSONObject former = JSONObject.fromObject(redisTemplate.opsForValue()
+                    .get(redisKey));
+                    JSONArray formerBids = former.getJSONArray("bids");
+                    JSONArray formerAsks = former.getJSONArray("asks");
+
+                    Map<String, String> bidsMap = new HashMap<>();
+                    Map<String, String> asksMap = new HashMap<>();
+
+                    for (int i = 0; i < formerBids.size(); i++) {
+                        JSONArray tmpArray = formerBids.getJSONArray(i);
+                        bidsMap.put(tmpArray.getString(0), tmpArray.getString(1));
+                    }
+                    for (int i = 0; i < formerAsks.size(); i++) {
+                        JSONArray tmpArray = formerAsks.getJSONArray(i);
+                        asksMap.put(tmpArray.getString(0), tmpArray.getString(1));
+                    }
+
+                    for (int i = 0; i < changes.size(); i++) {
+                        JSONArray tmpArray = changes.getJSONArray(i);
+                        String side = tmpArray.getString(0);
+                        String price = tmpArray.getString(1);
+                        String qty = tmpArray.getString(2);
+
+                        if (side.equals("sell")) {
+                            if (qty.equals("0")) {
+                                asksMap.remove(price);
+                            } else {
+                                asksMap.replace(price, qty);
+                            }
+                        } else if (side.equals("buy")) {
+                            if (qty.equals("0")) {
+                                bidsMap.remove(price);
+                            } else {
+                                bidsMap.replace(price, qty);
+                            }
+                        }
+                    }
+
+                    JSONArray newBids = new JSONArray();
+                    JSONArray newAsks = new JSONArray();
+
+                    Iterator iter1 = bidsMap.entrySet().iterator();
+                    while (iter1.hasNext()) {
+                        Map.Entry entry1 = (Map.Entry)iter1.next();
+                        JSONArray tmp = new JSONArray();
+                        tmp.add(entry1.getKey());
+                        tmp.add(entry1.getValue());
+                        newBids.add(tmp);
+                    }
+                    Iterator iter2 = asksMap.entrySet().iterator();
+                    while (iter2.hasNext()) {
+                        Map.Entry entry2 = (Map.Entry)iter2.next();
+                        JSONArray tmp = new JSONArray();
+                        tmp.add(entry2.getKey());
+                        tmp.add(entry2.getValue());
+                        newAsks.add(tmp);
+                    }
+
+                    JSONObject newer = new JSONObject();
+                    newer.put("bids", newBids);
+                    newer.put("asks", newAsks);
+
+                    redisTemplate.opsForValue().set(redisKey, newer.toString());
+                }
+                break;
+        }
     }
 
     public void sendMessage(String message) throws IOException {
