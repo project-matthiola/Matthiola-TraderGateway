@@ -124,8 +124,8 @@ public class HttpUtil {
         //JSONObject jsonResult = JSONObject.fromObject(result);
         //JSONObject jsonData = jsonResult.getJSONObject("data");
         //System.out.println(jsonData);
-        String param = "futures_id=123";
-        String result = new HttpUtil().sendGet("https://private-8a634-matthiola.apiary-mock.com/trades", param, "123");
+        String param = "";
+        String result = new HttpUtil().sendGet("http://10.162.200.54:8080/server/api/v1/admin/trades/", null, "123");
         //System.out.println(result);
         JSONObject jsonResult = JSONObject.fromObject(result);
         JSONArray jsonArray = jsonResult.getJSONArray("data");

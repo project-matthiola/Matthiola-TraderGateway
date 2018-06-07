@@ -35,7 +35,7 @@ public class TradeServiceImpl implements TradeService {
     public List getTrades(String futuresID, HttpServletRequest request) {
         String username = jwtTokenUtil.parseUsername(request);
         String params = "";
-        if (futuresID.equals("")) params += "futures_id=null";
+        if (futuresID.equals("null")) params += "futures_id=null";
         else params = params + "futures_id=" + futuresID;
 
         params = params + "&trader=" + username;
@@ -45,11 +45,12 @@ public class TradeServiceImpl implements TradeService {
 
         List tradeList = new ArrayList();
         for (Broker broker : brokers) {
-            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/trades", params, broker.getBrokerToken());
+            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/trades", null, broker.getBrokerToken());
             JSONObject jsonResult = JSONObject.fromObject(result);
             JSONArray jsonArray = jsonResult.getJSONArray("data");
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
+                object.put("broker", broker.getBrokerName());
                 tradeList.add(object);
             }
         }

@@ -28,7 +28,7 @@ public class FutureServiceImpl implements FutureService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @Cacheable(cacheNames = "futureslist")
+    //@Cacheable(cacheNames = "futureslist")
     @Override
     public List findAllFutures() {
         List<Future> futureList = futureRepository.findFuturesByExpired("false");

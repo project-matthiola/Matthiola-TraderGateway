@@ -1,6 +1,7 @@
 package com.cts.trader.websocket;
 
 import com.cts.trader.utils.SpringUtil;
+import com.cts.trader.utils.TradeHistoryComparator;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
 import javax.websocket.*;
 import java.io.IOException;
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -121,6 +123,7 @@ public class GatewaySocketClient {
 
     @OnMessage
     public void onMessage(String message) throws Exception {
+        logger.info("on message:" + message);
         redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
 
         JSONObject jsonMsg = JSONObject.fromObject(message);
@@ -131,8 +134,62 @@ public class GatewaySocketClient {
         String mode = jsonMsg.getString(jsonKeys.get(1)); // 'snapshot','update'
         String futuresID = jsonMsg.getString(jsonKeys.get(2));
         String redisKey = "";
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z z");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
         switch (type) {
-            case "orderBook":
+            case "trade":
+                redisKey = "trade," + brokerMapping.get(session) + "," + futuresID;
+                if (mode.equals("snapshot")) {
+                    JSONArray data = jsonMsg.getJSONArray(jsonKeys.get(3));
+                    JSONArray resultArray = new JSONArray();
+                    for (int i = 0; i < data.size(); i++) {
+                        JSONObject tmpObj = data.getJSONObject(i);
+                        JSONArray tmpArray = new JSONArray();
+                        tmpArray.add(tmpObj.get("price"));
+                        tmpArray.add(tmpObj.get("quantity"));
+                        String timeStr = tmpObj.getString("time");
+                        String formatTime = sdf2.format(sdf1.parse(timeStr));
+                        tmpArray.add(formatTime);
+                        resultArray.add(tmpArray);
+                    }
+                    redisTemplate.opsForValue().set(redisKey, resultArray.toString());
+                } else if (mode.equals("update")) {
+                    JSONObject updateData = jsonMsg.getJSONObject(jsonKeys.get(3));
+                    JSONArray updateArray = new JSONArray();
+                    updateArray.add(updateData.getString("price"));
+                    updateArray.add(updateData.getString("quantity"));
+                    String timeStr = updateData.getString("time");
+                    String formatTime = sdf2.format(sdf1.parse(timeStr));
+                    updateArray.add(formatTime);
+
+                    JSONArray formerArray = JSONArray.fromObject(redisTemplate.opsForValue().get(redisKey));
+                    List<JSONArray> tradeList = new ArrayList<>();
+                    for (int i = 0; i < formerArray.size(); i++) {
+                        tradeList.add(formerArray.getJSONArray(i));
+                    }
+                    Collections.sort(tradeList, new TradeHistoryComparator());
+
+                    if (tradeList.size() >= 50) {
+                        tradeList.remove(tradeList.size() - 1);
+                        tradeList.add(updateArray);
+                    } else {
+                        tradeList.add(updateArray);
+                    }
+                    Collections.sort(tradeList, new TradeHistoryComparator());
+
+                    JSONArray updatedArray = JSONArray.fromObject(tradeList);
+                    redisTemplate.opsForValue().set(redisKey, updatedArray.toString());
+                }
+                break;
+            case "order_book":
+                redisKey = "orderBook," + brokerMapping.get(session) + "," + futuresID;
+                if (mode.equals("snapshot")) {
+                    JSONObject data = jsonMsg.getJSONObject(jsonKeys.get(3));
+                    redisTemplate.opsForValue().set(redisKey, data.toString());
+                }
+                break;
+                /*
                 redisKey = "orderBook," + brokerMapping.get(session) + "," + futuresID;
                 if (mode.equals("snapshot")) {
                     JSONObject data = jsonMsg.getJSONObject(jsonKeys.get(3));
@@ -205,6 +262,8 @@ public class GatewaySocketClient {
                     redisTemplate.opsForValue().set(redisKey, newer.toString());
                 }
                 break;
+                */
+
         }
     }
 

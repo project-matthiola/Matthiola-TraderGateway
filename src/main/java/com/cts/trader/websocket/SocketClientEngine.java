@@ -21,7 +21,7 @@ import java.util.Queue;
  * @description WebsocketClientEngine
  * @version 1.0.0
  **/
-@Component(value = "SocketClientEngine")
+//@Component(value = "SocketClientEngine")
 public class SocketClientEngine {
     private BrokerRepository brokerRepository;
 

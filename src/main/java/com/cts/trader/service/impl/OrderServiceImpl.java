@@ -139,10 +139,10 @@ public class OrderServiceImpl implements OrderService {
     public List getOrders(String futuresID, String status, HttpServletRequest request) {
         String username = jwtTokenUtil.parseUsername(request);
         String params = "";
-        if (status.equals("")) params += "status=all";
+        if (status.equals("all")) params += "status=all";
         else params = params + "status=" + status;
 
-        if (futuresID.equals("")) params += "&futures_id=null";
+        if (futuresID.equals("null")) params += "&futures_id=null";
         else params = params + "&futures_id=" + futuresID;
 
         params = params + "&trader=" + username;
