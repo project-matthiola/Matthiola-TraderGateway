@@ -19,10 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.ConnectException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author lvjiawei
@@ -136,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List getOrders(String futuresID, String status, String page, HttpServletRequest request) {
+    public Map getOrders(String futuresID, String status, String page, HttpServletRequest request) {
         String username = jwtTokenUtil.parseUsername(request);
         String params = "";
         if (!futuresID.equals("null")) params = params + "&futures_id=" + futuresID;
@@ -147,18 +144,22 @@ public class OrderServiceImpl implements OrderService {
         System.out.println(params);
 
         List<Broker> brokers = brokerRepository.findAll();
-
+        int totalNum = 0;
         List orderList = new ArrayList();
         for (Broker broker : brokers) {
             String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/orders", params, broker.getBrokerToken());
             JSONObject jsonResult = JSONObject.fromObject(result);
             JSONArray jsonArray = jsonResult.getJSONArray("data");
+            totalNum += jsonResult.getInt("total");
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 orderList.add(object);
             }
         }
 
-        return orderList;
+        Map resultMap = new HashMap();
+        resultMap.put("orderList", orderList);
+        resultMap.put("totalNum", totalNum);
+        return resultMap;
     }
 }

@@ -2,6 +2,7 @@ package com.cts.trader.service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lvjiawei
@@ -15,7 +16,7 @@ public interface TradeService {
      * @param futuresID 期货ID
      * @param page      页数
      * @param request   http请求
-     * @return List     交易记录列表
+     * @return Map      交易记录
      */
-    List getTrades(String futuresID, String page, HttpServletRequest request);
+    Map getTrades(String futuresID, String page, HttpServletRequest request);
 }

@@ -15,7 +15,7 @@ import java.util.UUID;
  * @description FixInitiator
  * @version 1.0.0
  **/
-@Service("FixInitiator")
+//@Service("FixInitiator")
 public class FixInitiator {
     private static SocketInitiator initiator = null;
 

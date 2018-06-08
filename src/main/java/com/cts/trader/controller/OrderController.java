@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author lvjiawei
@@ -44,7 +45,9 @@ public class OrderController {
     @GetMapping("/getOrders")
     public RestResult getOrders(@RequestParam("futuresID")String futuresID, @RequestParam("status")String status,
                                 @RequestParam("page")String page, HttpServletRequest request) {
-        return resultGenerator.getSuccessResult(orderService.getOrders(futuresID, status, page, request));
+        //return resultGenerator.getSuccessResult(orderService.getOrders(futuresID, status, page, request));
+        Map result = orderService.getOrders(futuresID, status, page, request);
+        return resultGenerator.getSuccessResult(String.valueOf(result.get("totalNum")), result.get("orderList"));
     }
 
 }

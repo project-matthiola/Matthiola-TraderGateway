@@ -4,6 +4,7 @@ import com.cts.trader.model.Order;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lvjiawei
@@ -34,7 +35,7 @@ public interface OrderService {
      * @param status    订单状态
      * @param page      页数
      * @param request   http请求
-     * @return List     订单列表
+     * @return Map      订单列表
      */
-    List getOrders(String futuresID, String status, String page, HttpServletRequest request);
+    Map getOrders(String futuresID, String status, String page, HttpServletRequest request);
 }

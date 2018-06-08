@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lvjiawei
@@ -32,7 +34,7 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public List getTrades(String futuresID, String page, HttpServletRequest request) {
+    public Map getTrades(String futuresID, String page, HttpServletRequest request) {
         String username = jwtTokenUtil.parseUsername(request);
         String params = "";
         if (!futuresID.equals("null")) params = params + "futures_id=" + futuresID;
@@ -44,10 +46,12 @@ public class TradeServiceImpl implements TradeService {
         List<Broker> brokers = brokerRepository.findAll();
 
         List tradeList = new ArrayList();
+        int totalNum = 0;
         for (Broker broker : brokers) {
-            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/trades", null, broker.getBrokerToken());
+            String result = new HttpUtil().sendGet(broker.getBrokerHttp() + "/trades", params, broker.getBrokerToken());
             JSONObject jsonResult = JSONObject.fromObject(result);
             JSONArray jsonArray = jsonResult.getJSONArray("data");
+            totalNum += jsonResult.getInt("total");
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 object.put("broker", broker.getBrokerName());
@@ -55,6 +59,9 @@ public class TradeServiceImpl implements TradeService {
             }
         }
 
-        return tradeList;
+        Map resultMap = new HashMap();
+        resultMap.put("tradeList", tradeList);
+        resultMap.put("totalNum", totalNum);
+        return resultMap;
     }
 }

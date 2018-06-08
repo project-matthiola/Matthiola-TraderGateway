@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author lvjiawei
@@ -31,6 +32,8 @@ public class TradeController {
 
     @GetMapping("/getTrades")
     public RestResult getTrades(@RequestParam("futuresID")String futuresID, @RequestParam("page")String page, HttpServletRequest request) {
-        return resultGenerator.getSuccessResult(tradeService.getTrades(futuresID, page, request));
+        // return resultGenerator.getSuccessResult(tradeService.getTrades(futuresID, page, request));
+        Map result = tradeService.getTrades(futuresID, page, request);
+        return resultGenerator.getSuccessResult(String.valueOf(result.get("totalNum")), result.get("tradeList"));
     }
 }
