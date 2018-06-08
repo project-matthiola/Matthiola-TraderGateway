@@ -136,16 +136,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List getOrders(String futuresID, String status, HttpServletRequest request) {
+    public List getOrders(String futuresID, String status, String page, HttpServletRequest request) {
         String username = jwtTokenUtil.parseUsername(request);
         String params = "";
-        if (status.equals("all")) params += "status=all";
-        else params = params + "status=" + status;
+        if (!futuresID.equals("null")) params = params + "&futures_id=" + futuresID;
+        if (!status.equals("all")) params = params + "&status=" + status;
+        params = params + "&trader_name=" + username;
+        params = params + "&page=" + page;
 
-        if (futuresID.equals("null")) params += "&futures_id=null";
-        else params = params + "&futures_id=" + futuresID;
-
-        params = params + "&trader=" + username;
         System.out.println(params);
 
         List<Broker> brokers = brokerRepository.findAll();

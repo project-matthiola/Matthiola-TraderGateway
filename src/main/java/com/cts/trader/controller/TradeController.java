@@ -30,7 +30,7 @@ public class TradeController {
     }
 
     @GetMapping("/getTrades")
-    public RestResult getTrades(@RequestParam("futuresID")String futuresID, HttpServletRequest request) {
-        return resultGenerator.getSuccessResult(tradeService.getTrades(futuresID, request));
+    public RestResult getTrades(@RequestParam("futuresID")String futuresID, @RequestParam("page")String page, HttpServletRequest request) {
+        return resultGenerator.getSuccessResult(tradeService.getTrades(futuresID, page, request));
     }
 }

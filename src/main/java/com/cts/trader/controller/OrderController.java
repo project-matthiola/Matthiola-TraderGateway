@@ -42,8 +42,9 @@ public class OrderController {
     }
 
     @GetMapping("/getOrders")
-    public RestResult getOrders(@RequestParam("futuresID")String futuresID, @RequestParam("status")String status, HttpServletRequest request) {
-        return resultGenerator.getSuccessResult(orderService.getOrders(futuresID, status, request));
+    public RestResult getOrders(@RequestParam("futuresID")String futuresID, @RequestParam("status")String status,
+                                @RequestParam("page")String page, HttpServletRequest request) {
+        return resultGenerator.getSuccessResult(orderService.getOrders(futuresID, status, page, request));
     }
 
 }

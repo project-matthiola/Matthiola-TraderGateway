@@ -32,8 +32,9 @@ public interface OrderService {
      * 获取订单信息
      * @param futuresID 期货ID
      * @param status    订单状态
+     * @param page      页数
      * @param request   http请求
      * @return List     订单列表
      */
-    List getOrders(String futuresID, String status, HttpServletRequest request);
+    List getOrders(String futuresID, String status, String page, HttpServletRequest request);
 }

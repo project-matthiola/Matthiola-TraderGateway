@@ -32,13 +32,13 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public List getTrades(String futuresID, HttpServletRequest request) {
+    public List getTrades(String futuresID, String page, HttpServletRequest request) {
         String username = jwtTokenUtil.parseUsername(request);
         String params = "";
-        if (futuresID.equals("null")) params += "futures_id=null";
-        else params = params + "futures_id=" + futuresID;
+        if (!futuresID.equals("null")) params = params + "futures_id=" + futuresID;
+        params = params + "&trader_name=" + username;
+        params = params + "&page=" + page;
 
-        params = params + "&trader=" + username;
         System.out.println(params);
 
         List<Broker> brokers = brokerRepository.findAll();
