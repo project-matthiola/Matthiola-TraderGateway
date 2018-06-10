@@ -9,11 +9,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = TraderApplication.class)
 public class TraderApplicationTests {
     
 	@Test
 	public void contextLoads() {
+		System.out.println("contextLoads");
 	}
 	
 }

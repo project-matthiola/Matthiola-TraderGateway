@@ -137,7 +137,7 @@ public class OrderServiceImpl implements OrderService {
         String username = jwtTokenUtil.parseUsername(request);
         String params = "";
         if (!futuresID.equals("null")) params = params + "&futures_id=" + futuresID;
-        if (!status.equals("all")) params = params + "&status=" + status;
+        if (!status.equals("-1")) params = params + "&status=" + status;
         params = params + "&trader_name=" + username;
         params = params + "&page=" + page;
 

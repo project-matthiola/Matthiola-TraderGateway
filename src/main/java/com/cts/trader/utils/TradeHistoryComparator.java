@@ -7,7 +7,19 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
+/**
+ * @author lvjiawei
+ * @date 2018/6/10
+ * @description tradeHistory排序器
+ * @version 1.0.0
+ **/
 public class TradeHistoryComparator implements Comparator<JSONArray> {
+    /**
+     * 比较顺序
+     * @param o1   对象1
+     * @param o2   对象2
+     * @return int 结果
+     */
     @Override
     public int compare(JSONArray o1, JSONArray o2) {
         String time1 = o1.getString(2);

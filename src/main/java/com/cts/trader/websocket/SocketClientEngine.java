@@ -23,20 +23,13 @@ import java.util.Queue;
  **/
 //@Component(value = "SocketClientEngine")
 public class SocketClientEngine {
+    private final String traderGatewayName = "TraderGateway1";
     private BrokerRepository brokerRepository;
 
-    /*
-    @Autowired
-    public SocketClientEngine(GatewaySocketClient client) throws Exception {
-        this.client = client;
-        runWs("ws://localhost:4869/mockServer");
-        runWs("456");
-    }
-    */
     @Autowired
     public SocketClientEngine(BrokerRepository brokerRepository) throws Exception {
         this.brokerRepository = brokerRepository;
-        List<Broker> brokers = brokerRepository.findAll();
+        List<Broker> brokers = this.brokerRepository.findAll();
         List<String> brokerNames = new ArrayList<>();
         List<String> brokerWs = new ArrayList<>();
         for (Broker broker : brokers) {
@@ -48,14 +41,7 @@ public class SocketClientEngine {
             GatewaySocketClient client = new GatewaySocketClient();
             client.connect2Url(brokerWs.get(i));
             client.setBrokerMapping(brokerNames.get(i));
-            client.sendMessage("I am " + i);
+            client.sendMessage("I am " + traderGatewayName);
         }
     }
-
-    public void runWs(String url) throws Exception {
-        //this.client.connect2Url(url);
-        //this.client.connect2Url("ws://localhost:4869/mockServer");
-        //this.client.sendMessage("abcabc");
-    }
-
 }

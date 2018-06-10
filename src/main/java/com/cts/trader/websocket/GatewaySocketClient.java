@@ -123,7 +123,7 @@ public class GatewaySocketClient {
 
     @OnMessage
     public void onMessage(String message) throws Exception {
-        logger.info("on message:" + message);
+        //logger.info("on message:" + message);
         redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
 
         JSONObject jsonMsg = JSONObject.fromObject(message);
@@ -265,6 +265,8 @@ public class GatewaySocketClient {
                 */
 
         }
+        Thread.sleep(10000);
+        sendMessage("heartbeat");
     }
 
     public void sendMessage(String message) throws IOException {

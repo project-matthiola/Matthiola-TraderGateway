@@ -151,7 +151,7 @@ public class WebSocketServer {
         //System.out.println("key=" + key);
         String result = getFuturesMarketFromRedis(key);
         sendMessage(session, result);
-        logger.info("服务端返回: " + result);
+        //logger.info("服务端返回: " + result);
 
         try {
             Thread.sleep(1000);
