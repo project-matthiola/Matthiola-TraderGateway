@@ -29,10 +29,10 @@ Communication with Broker Gateway:
 ## Build Setup
 ``` bash
 # build for production
-gradlew build
+./gradlew build
 
 # build for production without test
-gradlew build -x test
+./gradlew build -x test
 
 ```
 
