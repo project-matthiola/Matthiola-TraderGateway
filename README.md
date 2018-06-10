@@ -1,9 +1,10 @@
 # Matthiola-TraderGateway
 
-[![Build Status](https://travis-ci.com/ljw9609/Trader.svg?token=rZsycNAAqukSyU9AujYH&branch=master)](https://travis-ci.com/ljw9609/Trader)
+[![Build Status](https://travis-ci.com/ljw9609/Matthiola-TraderGateway.svg?token=rZsycNAAqukSyU9AujYH&branch=master)](https://travis-ci.com/ljw9609/Matthiola-TraderGateway)
 ![language](https://img.shields.io/badge/language-java-red.svg)
+![license](https://img.shields.io/badge/license-GPL-yellow.svg)
 
-The Trader Gateway of *Distributed Commodities OTC Electronic Trading System*, instructed by *Morgan Stanley* and *SJTU SE*.
+The Trader Gateway of project **Matthiola**, a *Distributed Commodities OTC Electronic Trading System*, instructed by *Morgan Stanley* and *SJTU SE*.
 
 ## Architecture
 
@@ -25,5 +26,15 @@ Communication with Broker Gateway:
 ![websocker](https://raw.githubusercontent.com/ljw9609/markdown-pictures/master/websocket.png?token=ATNvWxgTQdCkZSTlN3bC7865va2eBcxeks5bJHpswA%3D%3D)
 
 
-# License
-GPL
+## Build Setup
+``` bash
+# build for production
+gradlew build
+
+# build for production without test
+gradlew build -x test
+
+```
+
+## License
+[GPL](https://github.com/ljw9609/Matthiola-TraderGateway/blob/master/LICENSE)
