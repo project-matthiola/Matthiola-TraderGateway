@@ -19,11 +19,11 @@ Communication with Broker Gateway:
 
 ### Overall Architecture
 
-![architecture](https://raw.githubusercontent.com/ljw9609/markdown-pictures/master/gatewayarchitecture.png?token=ATNvW2LapNgKNG34AGYUbdVkx_SWoAtGks5bJHh4wA%3D%3D)
+![architecture](https://raw.githubusercontent.com/ljw9609/Matthiola-TraderGateway/master/docs/assets/Trader.png?token=ATNvWw-4puPD_09eeKaaHPRD6KSv_av6ks5bJxH7wA%3D%3D)
 
 ### Websocket Architecture
 
-![websocker](https://raw.githubusercontent.com/ljw9609/markdown-pictures/master/websocket.png?token=ATNvWxgTQdCkZSTlN3bC7865va2eBcxeks5bJHpswA%3D%3D)
+![websocker](https://raw.githubusercontent.com/ljw9609/Matthiola-TraderGateway/master/docs/assets/Websocket.png?token=ATNvW2K69RqKVoDRvMGddRf00-ww3Gfjks5bJxJEwA%3D%3D)
 
 
 ## Build Setup
