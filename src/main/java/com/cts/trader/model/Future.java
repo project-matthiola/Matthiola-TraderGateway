@@ -34,15 +34,19 @@ public class Future implements Serializable {
     @Column(nullable = false, name = "expired")
     private String expired;
 
+    @Column(nullable = false, name = "icon")
+    private String icon;
+
     public Future() {}
 
-    public Future(String futureID, String futureName, String period, String symbol, String category, String expired) {
+    public Future(String futureID, String futureName, String period, String symbol, String category, String expired, String icon) {
         this.futureID = futureID;
         this.futureName = futureName;
         this.period = period;
         this.symbol = symbol;
         this.category = category;
         this.expired = expired;
+        this.icon = icon;
     }
 
     public String getFutureID() {
@@ -91,5 +95,13 @@ public class Future implements Serializable {
 
     public void setExpired(String expired) {
         this.expired = expired;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

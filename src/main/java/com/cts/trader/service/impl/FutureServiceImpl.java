@@ -34,13 +34,16 @@ public class FutureServiceImpl implements FutureService {
         List<Future> futureList = futureRepository.findFuturesByExpired("false");
         List futures = new ArrayList();
         Set<String> futuresNameSet = new HashSet<>();
+        Map<String, String> iconMap = new HashMap<>();
         for (Future future : futureList) {
             futuresNameSet.add(future.getFutureName());
+            iconMap.put(future.getFutureName(), future.getIcon());
         }
 
         for (String futureName : futuresNameSet) {
             Map map = new HashMap();
             map.put("futureName", futureName);
+            map.put("icon", iconMap.get(futureName));
 
             //List<Future> specificFutures = futureRepository.findFuturesByFutureName(futureName);
             List<Future> specificFutures = futureRepository.findFuturesByFutureNameAndExpired(futureName, "false");

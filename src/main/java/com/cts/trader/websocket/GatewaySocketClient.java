@@ -123,7 +123,7 @@ public class GatewaySocketClient {
 
     @OnMessage
     public void onMessage(String message) throws Exception {
-        //logger.info("on message:" + message);
+        logger.info("on message:" + message);
         redisTemplate = (RedisTemplate)SpringUtil.getBean("myRedisTemplate");
 
         JSONObject jsonMsg = JSONObject.fromObject(message);
@@ -135,8 +135,9 @@ public class GatewaySocketClient {
         String futuresID = jsonMsg.getString(jsonKeys.get(2));
         String redisKey = "";
 
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z z");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSSSS Z z");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z z");
         switch (type) {
             case "trade":
                 redisKey = "trade," + brokerMapping.get(session) + "," + futuresID;
@@ -149,7 +150,7 @@ public class GatewaySocketClient {
                         tmpArray.add(tmpObj.get("price"));
                         tmpArray.add(tmpObj.get("quantity"));
                         String timeStr = tmpObj.getString("time");
-                        String formatTime = sdf2.format(sdf1.parse(timeStr));
+                        String formatTime = sdf2.format(sdf3.parse(timeStr));
                         tmpArray.add(formatTime);
                         resultArray.add(tmpArray);
                     }
@@ -160,7 +161,7 @@ public class GatewaySocketClient {
                     updateArray.add(updateData.getString("price"));
                     updateArray.add(updateData.getString("quantity"));
                     String timeStr = updateData.getString("time");
-                    String formatTime = sdf2.format(sdf1.parse(timeStr));
+                    String formatTime = sdf2.format(sdf3.parse(timeStr));
                     updateArray.add(formatTime);
 
                     JSONArray formerArray = JSONArray.fromObject(redisTemplate.opsForValue().get(redisKey));
@@ -265,8 +266,8 @@ public class GatewaySocketClient {
                 */
 
         }
-        Thread.sleep(10000);
-        sendMessage("heartbeat");
+        //Thread.sleep(10000);
+        //sendMessage("heartbeat");
     }
 
     public void sendMessage(String message) throws IOException {

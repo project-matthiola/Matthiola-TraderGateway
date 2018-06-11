@@ -18,4 +18,5 @@ public interface BrokerRepository extends JpaRepository<Broker, Long> {
      * @return Broker
      */
     Broker findBrokerByBrokerName(String brokerName);
+    Broker findBrokerByBrokerID(String brokerID);
 }

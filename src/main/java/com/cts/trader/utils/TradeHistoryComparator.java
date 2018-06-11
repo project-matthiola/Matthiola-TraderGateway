@@ -45,10 +45,10 @@ public class TradeHistoryComparator implements Comparator<JSONArray> {
         //System.out.println(array);
         //System.out.println(LocalDateTime.now(ZoneId.of("UTC")));
 
-        String strDate = "2018-06-06 14:43:29 +0800 CST";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z z");
+        String strDate = "2018-06-11 18:41:20.868706823 +0800 CST";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSSSSS Z z");
         Date date = simpleDateFormat.parse(strDate);
-        SimpleDateFormat simpleDateFormat1  = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat1  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
         System.out.println(simpleDateFormat1.format(date));
     }
 }

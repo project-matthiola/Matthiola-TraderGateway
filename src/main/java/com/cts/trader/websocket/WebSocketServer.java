@@ -103,7 +103,7 @@ public class WebSocketServer {
         //logger.info("服务端返回: " + result);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(800);
         } catch (Exception e) {
             e.printStackTrace();
             onClose(session);
@@ -154,7 +154,7 @@ public class WebSocketServer {
         //logger.info("服务端返回: " + result);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(800);
         } catch (Exception e) {
             e.printStackTrace();
             onClose(session);

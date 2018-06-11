@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import quickfix.*;
 import quickfix.field.*;
 import quickfix.fix50sp2.NewOrderSingle;
+import quickfix.fix50sp2.OrderCancelRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.ConnectException;
@@ -87,11 +88,11 @@ public class OrderServiceImpl implements OrderService {
             return true;
         }
         */
-
+        String Target = brokerRepository.findBrokerByBrokerID(order.getBrokerName()).getBrokerName();
         NewOrderSingle orderSingle = new NewOrderSingle();
         orderSingle.getHeader().setField(new MsgType(MsgType.ORDER_SINGLE));
         orderSingle.getHeader().setField(new SenderCompID("Trader"));
-        orderSingle.getHeader().setField(new TargetCompID("Broker"));
+        orderSingle.getHeader().setField(new TargetCompID(Target));
         orderSingle.getHeader().setField(new SenderSubID(username));
         orderSingle.set(new ClOrdID(order.getOrderID().toString()));
         orderSingle.set(new OrdType(order.getType()));
@@ -115,6 +116,17 @@ public class OrderServiceImpl implements OrderService {
         String username = jwtTokenUtil.parseUsername(request);
         if (username == null) return false;
 
+        String Target = order.getBrokerName();
+        OrderCancelRequest orderCancelRequest = new OrderCancelRequest();
+        orderCancelRequest.getHeader().setField(new MsgType(MsgType.ORDER_CANCEL_REQUEST));
+        orderCancelRequest.getHeader().setField(new SenderCompID("Trader"));
+        orderCancelRequest.getHeader().setField(new TargetCompID(Target));
+        orderCancelRequest.getHeader().setField(new SenderSubID(username));
+        orderCancelRequest.setField(new ClOrdID(UUID.randomUUID().toString()));
+        orderCancelRequest.setField(new OrderID(order.getOrderID().toString()));
+        orderCancelRequest.setField(new Symbol(order.getFutureID()));
+
+        /*
         Message cancelOrderRequest = new Message();
         cancelOrderRequest.getHeader().setField(new MsgType(MsgType.ORDER_CANCEL_REQUEST));
         cancelOrderRequest.getHeader().setField(new SenderCompID("Trader"));
@@ -123,9 +135,9 @@ public class OrderServiceImpl implements OrderService {
         cancelOrderRequest.setField(new ClOrdID(UUID.randomUUID().toString()));
         cancelOrderRequest.setField(new OrderID(order.getOrderID().toString()));
         cancelOrderRequest.setField(new Symbol(order.getFutureID()));
-
+        */
         try {
-            return Session.sendToTarget(cancelOrderRequest);
+            return Session.sendToTarget(orderCancelRequest);
         } catch (SessionNotFound e) {
             e.printStackTrace();
             return false;
@@ -153,6 +165,7 @@ public class OrderServiceImpl implements OrderService {
             totalNum += jsonResult.getInt("total");
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
+                object.put("brokerName", broker.getBrokerName());
                 orderList.add(object);
             }
         }
