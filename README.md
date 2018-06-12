@@ -37,7 +37,7 @@ Communication with Broker Gateway:
 ```
 
 ## Config
-+ application.properties: 
++ application.properties:
     + datasource config
     + logger config
     + redis config
@@ -45,6 +45,9 @@ Communication with Broker Gateway:
     + FileLogPath
     + FileStorePath
     + session config
+
+## Docs
+[https://project-matthiola.github.io/Matthiola-TraderGateway/](https://project-matthiola.github.io/Matthiola-TraderGateway/)
 
 ## License
 [GPL](https://github.com/ljw9609/Matthiola-TraderGateway/blob/master/LICENSE)
